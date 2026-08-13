@@ -9,7 +9,6 @@ import {
 import "leaflet/dist/leaflet.css";
 import { Link } from "react-router-dom";
 
-
 /* ================= LOCATION MARKER ================= */
 
 function LocationMarker({ setLocation }) {
@@ -25,11 +24,9 @@ function LocationMarker({ setLocation }) {
   return null;
 }
 
-
 /* ================= REPORT ISSUE ================= */
 
 function ReportIssue() {
-
   /* ================= STATES ================= */
 
   const [location, setLocation] = useState(null);
@@ -42,11 +39,9 @@ function ReportIssue() {
 
   const [submitted, setSubmitted] = useState(false);
 
-
   /* ================= SUBMIT ================= */
 
   const handleSubmit = () => {
-
     if (!title.trim()) {
       alert("Please enter issue title.");
       return;
@@ -68,19 +63,15 @@ function ReportIssue() {
     }
 
     setSubmitted(true);
-
   };
-
 
   return (
     <div className="report-page">
-
       <div className="report-container">
 
         {/* ================= HEADER ================= */}
 
         <div className="report-header">
-
           <Link to="/" className="back-link">
             ← Back to Home
           </Link>
@@ -96,18 +87,15 @@ function ReportIssue() {
           <p>
             Help your city identify and resolve problems faster.
           </p>
-
         </div>
-
 
         {/* ================= FORM CARD ================= */}
 
         <div className="report-card">
 
-          {/* Issue Title */}
+          {/* ================= ISSUE TITLE ================= */}
 
           <div className="form-group">
-
             <label>
               Issue Title
             </label>
@@ -116,16 +104,18 @@ function ReportIssue() {
               type="text"
               placeholder="e.g. Large pothole near main road"
               value={title}
+              maxLength={100}
               onChange={(e) => setTitle(e.target.value)}
             />
 
+            <p className="character-count">
+              {title.length}/100 characters
+            </p>
           </div>
 
-
-          {/* Category */}
+          {/* ================= CATEGORY ================= */}
 
           <div className="form-group">
-
             <label>
               Issue Category
             </label>
@@ -134,7 +124,6 @@ function ReportIssue() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-
               <option value="">
                 Select a category
               </option>
@@ -162,16 +151,12 @@ function ReportIssue() {
               <option value="drainage">
                 Drainage
               </option>
-
             </select>
-
           </div>
 
-
-          {/* Description */}
+          {/* ================= DESCRIPTION ================= */}
 
           <div className="form-group">
-
             <label>
               Description
             </label>
@@ -180,28 +165,28 @@ function ReportIssue() {
               rows="5"
               placeholder="Describe the issue in detail..."
               value={description}
+              maxLength={500}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
 
+            <p className="character-count">
+              {description.length}/500 characters
+            </p>
           </div>
-
 
           {/* ================= MAP ================= */}
 
           <div className="form-group">
-
             <label>
               Issue Location
             </label>
 
             <div className="map-wrapper">
-
               <MapContainer
                 center={[23.2599, 77.4126]}
                 zoom={13}
                 className="issue-map"
               >
-
                 <TileLayer
                   attribution="&copy; OpenStreetMap contributors"
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -215,112 +200,92 @@ function ReportIssue() {
                   <Marker
                     position={[
                       location.lat,
-                      location.lng
+                      location.lng,
                     ]}
                   />
                 )}
-
               </MapContainer>
-
             </div>
-
 
             {/* Location Info */}
 
             {location ? (
-
               <p className="location-text">
                 📍 Location selected:{" "}
                 {location.lat.toFixed(5)},{" "}
                 {location.lng.toFixed(5)}
               </p>
-
             ) : (
-
               <p className="location-hint">
                 Click on the map to select the issue location.
               </p>
-
             )}
-
           </div>
 
+         {/* ================= PHOTO ================= */}
 
-          {/* ================= PHOTO ================= */}
+<div className="form-group">
+  <label>
+    Photo Evidence
+  </label>
 
-          <div className="form-group">
+  <div className="upload-box">
+    {!photo ? (
+      <>
+        <span className="upload-icon">
+          📷
+        </span>
 
-            <label>
-              Photo Evidence
-            </label>
+        <p>
+          Upload a photo of the issue
+        </p>
 
-            <div className="upload-box">
+        <label className="upload-btn">
+          Choose Photo
 
-              {!photo ? (
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files[0];
 
-                <>
-                  <span className="upload-icon">
-                    📷
-                  </span>
+              if (file) {
+                const maxSize = 5 * 1024 * 1024; // 5 MB
 
-                  <p>
-                    Upload a photo of the issue
-                  </p>
+                if (file.size > maxSize) {
+                  alert("Photo size must be less than 5 MB.");
+                  e.target.value = "";
+                  return;
+                }
 
-                  <label className="upload-btn">
+                setPhoto(URL.createObjectURL(file));
+              }
+            }}
+          />
+        </label>
+      </>
+    ) : (
+      <div className="photo-preview">
+        <img
+          src={photo}
+          alt="Issue preview"
+        />
 
-                    Choose Photo
-
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) => {
-
-                        const file = e.target.files[0];
-
-                        if (file) {
-                          setPhoto(
-                            URL.createObjectURL(file)
-                          );
-                        }
-
-                      }}
-                    />
-
-                  </label>
-                </>
-
-              ) : (
-
-                <div className="photo-preview">
-
-                  <img
-                    src={photo}
-                    alt="Issue preview"
-                  />
-
-                  <button
-                    type="button"
-                    className="remove-photo"
-                    onClick={() => setPhoto(null)}
-                  >
-                    Remove Photo
-                  </button>
-
-                </div>
-
-              )}
-
-            </div>
-
-          </div>
-
-
+        <button
+          type="button"
+          className="remove-photo"
+          onClick={() => setPhoto(null)}
+        >
+          Remove Photo
+        </button>
+      </div>
+    )}
+  </div>
+</div>
           {/* ================= PRIORITY ================= */}
 
           <div className="form-group">
-
             <label>
               Priority
             </label>
@@ -329,7 +294,6 @@ function ReportIssue() {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
-
               <option value="low">
                 Low
               </option>
@@ -341,11 +305,8 @@ function ReportIssue() {
               <option value="high">
                 High
               </option>
-
             </select>
-
           </div>
-
 
           {/* ================= SUBMIT ================= */}
 
@@ -357,19 +318,15 @@ function ReportIssue() {
             Submit Issue
           </button>
 
-
           {/* ================= SUCCESS MESSAGE ================= */}
 
           {submitted && (
-
             <div className="success-message">
-
               <div className="success-icon">
                 ✓
               </div>
 
               <div>
-
                 <h3>
                   Issue Reported Successfully!
                 </h3>
@@ -378,20 +335,14 @@ function ReportIssue() {
                   Your civic issue has been submitted.
                   You can track its progress from your dashboard.
                 </p>
-
               </div>
-
             </div>
-
           )}
 
         </div>
-
       </div>
-
     </div>
   );
 }
-
 
 export default ReportIssue;
