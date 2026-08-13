@@ -1,24 +1,48 @@
+<<<<<<< HEAD
+/* =========================
+   NAVBAR
+========================= */
+=======
 /* =====================
    NAVBAR
 ===================== */
+>>>>>>> origin/main
 
 .navbar {
   width: 100%;
   height: 76px;
+<<<<<<< HEAD
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #dde5de;
+=======
   background: #fff;
   border-bottom: 1px solid #DDE5DE;
+>>>>>>> origin/main
 
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  box-shadow: 0 2px 10px rgba(23, 37, 29, 0.04);
 }
+
+
+/* =========================
+   NAVBAR INNER
+========================= */
 
 .navbar-inner {
   width: 100%;
-  max-width: 1380px;
   height: 100%;
+<<<<<<< HEAD
+
+  padding: 0 5vw;
+=======
   margin: 0 auto;
   padding: 0 34px;
+>>>>>>> origin/main
 
   display: flex;
   align-items: center;
@@ -26,14 +50,20 @@
 }
 
 
-/* =====================
+/* =========================
    LOGO
-===================== */
+========================= */
 
 .navbar-logo {
   display: flex;
   align-items: center;
   gap: 11px;
+<<<<<<< HEAD
+
+  text-decoration: none;
+
+=======
+>>>>>>> origin/main
   flex-shrink: 0;
 }
 
@@ -47,39 +77,72 @@
   justify-content: center;
 
   border-radius: 10px;
+<<<<<<< HEAD
+
+  background: #17251d;
+  color: #84cc16;
+
+  font-size: 19px;
+
+  box-shadow: 0 5px 15px rgba(23, 37, 29, 0.16);
+
+  transition: all 0.2s ease;
+}
+
+.navbar-logo:hover .logo-box {
+  transform: translateY(-1px);
+
+  box-shadow: 0 7px 18px rgba(23, 37, 29, 0.2);
+}
+
+.logo-text {
+  color: #17251d;
+
+=======
   background: #17251D;
   color: #84CC16;
 }
 
 .logo-text {
   color: #17251D;
+>>>>>>> origin/main
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.6px;
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
   white-space: nowrap;
 }
 
 .logo-text span {
-  color: #15803D;
+  color: #15803d;
 }
 
 
-/* =====================
+/* =========================
    NAVIGATION
-===================== */
+========================= */
 
 .navbar-links {
+  height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 36px;
+  gap: 40px;
 
   margin-left: auto;
+<<<<<<< HEAD
+  margin-right: 3vw;
+=======
   margin-right: 32px;
 
   height: 100%;
   flex-shrink: 0;
+>>>>>>> origin/main
 }
 
 .nav-link {
@@ -91,25 +154,28 @@
   display: flex;
   align-items: center;
 
-  color: #64748B;
+  color: #64748b;
 
   font-size: 14px;
   font-weight: 500;
 
   text-decoration: none;
+<<<<<<< HEAD
+=======
   white-space: nowrap;
 
   cursor: pointer;
+>>>>>>> origin/main
 
   transition: color 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #15803D;
+  color: #15803d;
 }
 
 .nav-link.active {
-  color: #17251D;
+  color: #17251d;
   font-weight: 700;
 }
 
@@ -124,6 +190,9 @@
   height: 3px;
   border-radius: 5px 5px 0 0;
 
+<<<<<<< HEAD
+  background: #15803d;
+=======
   background: #15803D;
 
   transform: scaleX(0);
@@ -133,18 +202,241 @@
 .nav-link:hover::after,
 .nav-link.active::after {
   transform: scaleX(1);
+>>>>>>> origin/main
 }
 
 
-/* =====================
-   BUTTONS
-===================== */
+/* =========================
+   RIGHT SIDE
+========================= */
 
 .navbar-actions {
   display: flex;
   align-items: center;
   gap: 14px;
 
+<<<<<<< HEAD
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn {
+  height: 40px;
+
+  padding: 0 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5d0;
+
+  border-radius: 8px;
+
+  color: #17251d;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  border-color: #15803d;
+
+  color: #15803d;
+
+  background: #f3f8f4;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   REPORT BUTTON
+========================= */
+
+.report-btn {
+  height: 40px;
+
+  padding: 0 19px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #15803d;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 15px rgba(21, 128, 61, 0.2);
+
+  transition: all 0.2s ease;
+}
+
+.report-btn:hover {
+  background: #166534;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 18px rgba(21, 128, 61, 0.26);
+}
+
+.report-arrow {
+  font-size: 16px;
+
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.report-btn:hover .report-arrow {
+  transform: translateX(3px);
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobile-menu {
+  display: none;
+
+  margin-left: auto;
+
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #cbd5d0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #17251d;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+
+.mobile-menu:hover {
+  border-color: #15803d;
+
+  color: #15803d;
+
+  background: #f3f8f4;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .navbar-inner {
+    padding: 0 4vw;
+  }
+
+  .navbar-links {
+    gap: 24px;
+
+    margin-right: 2vw;
+  }
+
+  .logo-text {
+    font-size: 19px;
+  }
+
+  .login-btn {
+    padding: 0 14px;
+  }
+
+  .report-btn {
+    padding: 0 15px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    height: 68px;
+  }
+
+  .navbar-inner {
+    padding: 0 20px;
+  }
+
+  .navbar-links,
+  .navbar-actions {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-box {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+
+  .navbar-inner {
+    padding: 0 14px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .logo-box {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mobile-menu {
+    width: 38px;
+    height: 38px;
+  }
+=======
   flex-shrink: 0;
 }
 
@@ -153,4 +445,5 @@
   height: 40px;
   white-space: nowrap;
   flex-shrink: 0;
+>>>>>>> origin/main
 }

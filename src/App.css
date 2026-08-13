@@ -85,6 +85,8 @@ img {
   background: var(--white);
 }
 
+<<<<<<< HEAD
+=======
 
 
 
@@ -298,8 +300,9 @@ img {
 }
 
 
+>>>>>>> origin/main
 /* =========================================================
-   HERO
+   HERO SECTION
 ========================================================= */
 
 .hero {
@@ -313,7 +316,9 @@ img {
 }
 
 
-/* Background decoration */
+/* =========================================================
+   BACKGROUND DECORATION
+========================================================= */
 
 .hero-bg-circle {
   position: absolute;
@@ -352,21 +357,21 @@ img {
 
 .hero-container {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1380px;
 
   min-height: 650px;
 
   margin: 0 auto;
 
-  padding: 70px 35px;
+  padding: 70px 5vw;
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 
   align-items: center;
 
-  gap: 70px;
+  gap: 60px;
 
   position: relative;
 
@@ -380,11 +385,16 @@ img {
 
 .hero-content {
   position: relative;
+
   z-index: 3;
+
+  max-width: 620px;
 }
 
 
-/* Badge */
+/* =========================================================
+   HERO BADGE
+========================================================= */
 
 .hero-badge {
   display: inline-flex;
@@ -398,7 +408,7 @@ img {
 
   background: var(--primary-light);
 
-  border: 1px solid #BBF7D0;
+  border: 1px solid #bbf7d0;
 
   color: var(--primary);
 
@@ -409,17 +419,23 @@ img {
   letter-spacing: 1.2px;
 }
 
-.hero-badge span {
+.badge-dot {
   width: 7px;
   height: 7px;
+
+  flex-shrink: 0;
 
   border-radius: 50%;
 
   background: var(--primary);
+
+  box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.08);
 }
 
 
-/* Heading */
+/* =========================================================
+   HERO HEADING
+========================================================= */
 
 .hero h1 {
   margin: 24px 0 18px;
@@ -440,7 +456,9 @@ img {
 }
 
 
-/* Description */
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
 
 .hero-content > p {
   max-width: 550px;
@@ -469,53 +487,83 @@ img {
   margin-top: 32px;
 }
 
-.hero-primary-btn {
+.hero-primary-btn,
+.hero-secondary-btn {
   min-height: 48px;
 
   padding: 0 21px;
 
-  border: none;
-
   border-radius: 9px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+/* Primary */
+
+.hero-primary-btn {
+  border: none;
 
   background: var(--primary);
 
   color: var(--white);
 
-  font-size: 13px;
-
   font-weight: 650;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
 
   box-shadow:
     0 7px 18px rgba(21, 128, 61, 0.20);
-
-  transition: 0.2s ease;
 }
 
 .hero-primary-btn:hover {
   background: var(--primary-dark);
 
   transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 22px rgba(21, 128, 61, 0.25);
 }
 
+.hero-arrow {
+  font-size: 16px;
+
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.hero-primary-btn:hover .hero-arrow {
+  transform: translateX(3px);
+}
+
+
+/* Secondary */
+
 .hero-secondary-btn {
-  min-height: 48px;
-
-  padding: 0 21px;
-
   border: 1px solid var(--border);
-
-  border-radius: 9px;
 
   background: var(--white);
 
   color: var(--dark);
 
-  font-size: 13px;
-
   font-weight: 600;
 
-  transition: 0.2s ease;
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
 }
 
 .hero-secondary-btn:hover {
@@ -524,11 +572,13 @@ img {
   color: var(--primary);
 
   background: var(--primary-light);
+
+  transform: translateY(-1px);
 }
 
 
 /* =========================================================
-   TRUST
+   TRUST SECTION
 ========================================================= */
 
 .hero-trust {
@@ -563,6 +613,8 @@ img {
   background: var(--primary-light);
 
   color: var(--primary);
+
+  font-size: 13px;
 }
 
 .trust-icons div:first-child {
@@ -589,133 +641,399 @@ img {
 
 
 /* =========================================================
-   CIVICGUARDIAN HERO IMAGE
-   Purple artwork -> Green Civic Theme
-========================================================= */
-
-.hero-image-card {
-    width: 480px;
-    overflow: hidden;
-
-    background: #ffffff;
-
-    border: 1px solid #DDE5DE;
-    border-radius: 20px;
-
-    box-shadow:
-        0 20px 45px rgba(22, 101, 52, 0.10);
-}
-
-.hero-image-card img {
-    width: 100%;
-    height: 360px;
-
-    object-fit: cover;
-
-    /* Convert purple tones into green */
-    filter: hue-rotate(-135deg) saturate(1.15);
-
-    display: block;
-}
-
-
-/* =========================================================
-   CIVICGUARDIAN HERO — ISSUE CARDS POSITION
+   HERO IMAGE WRAPPER
 ========================================================= */
 
 .hero-image-wrapper {
-    position: relative;
+  position: relative;
 
-    width: 100%;
-    min-height: 450px;
+  width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+  min-height: 450px;
 
+  display: flex;
 
-/* Main illustration */
-
-.hero-image-card {
-    position: relative;
-
-    width: 480px;
-    height: 360px;
-
-    overflow: hidden;
-
-    background: #ffffff;
-
-    border: 1px solid #DDE5DE;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 20px 45px rgba(22, 101, 52, 0.10);
-
-    z-index: 1;
-}
-
-.hero-image-card img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-
-    /* Purple → green */
-    filter: hue-rotate(-135deg) saturate(1.15);
+  align-items: center;
+  justify-content: center;
 }
 
 
 /* =========================================================
-   ISSUE RESOLVED CARD
+   HERO IMAGE CARD
+========================================================= */
+
+.hero-image-card {
+  position: relative;
+
+  width: min(480px, 100%);
+
+  height: 360px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #dde5de;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 45px rgba(22, 101, 52, 0.10);
+
+  z-index: 1;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 25px 55px rgba(22, 101, 52, 0.15);
+}
+
+.hero-image-card img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  /* Purple artwork → green civic theme */
+  filter: hue-rotate(-135deg) saturate(1.15);
+}
+
+
+/* =========================================================
+   FLOATING ISSUE CARDS
 ========================================================= */
 
 .hero-floating-card {
-    position: absolute;
+  position: absolute;
 
-    display: flex;
-    align-items: center;
+  display: flex;
 
-    gap: 10px;
+  align-items: center;
 
-    min-width: 200px;
+  gap: 10px;
 
-    padding: 12px 15px;
+  min-width: 200px;
 
-    background: #ffffff;
+  padding: 12px 15px;
 
-    border: 1px solid #DDE5DE;
+  background: #ffffff;
 
-    border-radius: 11px;
+  border: 1px solid #dde5de;
 
-    box-shadow:
-        0 12px 30px rgba(22, 101, 52, 0.12);
+  border-radius: 11px;
 
-    z-index: 5;
+  box-shadow:
+    0 12px 30px rgba(22, 101, 52, 0.12);
 
-    white-space: nowrap;
+  z-index: 5;
+
+  white-space: nowrap;
+
+  transition: transform 0.25s ease;
+}
+
+.hero-floating-card:hover {
+  transform: translateY(-4px);
 }
 
 
-/* Resolved issue */
+/* =========================================================
+   FLOATING ICON
+========================================================= */
+
+.floating-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  font-size: 17px;
+
+  font-weight: 800;
+}
+
+.blue-icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   FLOATING CONTENT
+========================================================= */
+
+.floating-content strong {
+  display: block;
+
+  color: var(--dark);
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.floating-content span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--muted);
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   FLOATING CARD POSITIONS
+========================================================= */
 
 .floating-one {
-    left: calc(50% - 275px);
-    top: 90px;
+  left: 0;
+
+  top: 75px;
 }
-
-
-/* New issue */
 
 .floating-two {
-    right: calc(50% - 275px);
-    bottom: 55px;
+  right: 0;
+
+  bottom: 45px;
 }
 
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .hero-container {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 35px;
+
+    padding: 60px 4vw;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 5vw, 58px);
+
+    letter-spacing: -2px;
+  }
+
+  .hero-image-card {
+    width: 100%;
+
+    height: 330px;
+  }
+
+  .hero-floating-card {
+    min-width: 180px;
+
+    padding: 10px 12px;
+  }
+
+  .floating-one {
+    left: -10px;
+  }
+
+  .floating-two {
+    right: -10px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 750px) {
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-container {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    padding: 55px 20px 70px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+
+    text-align: center;
+  }
+
+  .hero-badge {
+    justify-content: center;
+  }
+
+  .hero h1 {
+    margin-top: 20px;
+
+    font-size: clamp(42px, 12vw, 58px);
+
+    letter-spacing: -2px;
+  }
+
+  .hero-content > p {
+    margin: 0 auto;
+
+    font-size: 15px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .hero-trust {
+    justify-content: center;
+  }
+
+  .hero-image-wrapper {
+    min-height: 390px;
+
+    width: 100%;
+  }
+
+  .hero-image-card {
+    width: 100%;
+
+    max-width: 480px;
+
+    height: 330px;
+  }
+
+  .floating-one {
+    left: 0;
+
+    top: 35px;
+  }
+
+  .floating-two {
+    right: 0;
+
+    bottom: 20px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .hero-container {
+    padding: 45px 16px 60px;
+
+    gap: 35px;
+  }
+
+  .hero-badge {
+    font-size: 8px;
+
+    letter-spacing: 0.8px;
+
+    padding: 7px 11px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+
+    line-height: 1.08;
+  }
+
+  .hero-content > p {
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .hero-primary-btn,
+  .hero-secondary-btn {
+    width: 100%;
+  }
+
+  .hero-trust {
+    margin-top: 24px;
+  }
+
+  .hero-image-wrapper {
+    min-height: 330px;
+  }
+
+  .hero-image-card {
+    height: 270px;
+
+    border-radius: 16px;
+  }
+
+  .hero-floating-card {
+    min-width: auto;
+
+    padding: 9px 10px;
+
+    gap: 7px;
+  }
+
+  .floating-icon {
+    width: 30px;
+    height: 30px;
+
+    font-size: 14px;
+  }
+
+  .floating-content strong {
+    font-size: 9px;
+  }
+
+  .floating-content span {
+    font-size: 8px;
+  }
+
+  .floating-one {
+    left: -2px;
+
+    top: 20px;
+  }
+
+  .floating-two {
+    right: -2px;
+
+    bottom: 10px;
+  }
+}
 
 /* =========================================================
    GREEN ICONS
