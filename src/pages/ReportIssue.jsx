@@ -57,12 +57,46 @@ function ReportIssue() {
       return;
     }
 
+    if (description.trim().length < 10) {
+      alert(
+        "Please provide at least 10 characters in the description."
+      );
+      return;
+    }
+
     if (!location) {
       alert("Please select the issue location on the map.");
       return;
     }
 
     setSubmitted(true);
+  };
+
+  /* ================= PHOTO UPLOAD ================= */
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      alert("Photo size must be less than 5 MB.");
+      e.target.value = "";
+      return;
+    }
+
+    const photoUrl = URL.createObjectURL(file);
+    setPhoto(photoUrl);
+  };
+
+  /* ================= REMOVE PHOTO ================= */
+
+  const handleRemovePhoto = () => {
+    setPhoto(null);
   };
 
   return (
@@ -72,6 +106,7 @@ function ReportIssue() {
         {/* ================= HEADER ================= */}
 
         <div className="report-header">
+
           <Link to="/" className="back-link">
             ← Back to Home
           </Link>
@@ -87,6 +122,7 @@ function ReportIssue() {
           <p>
             Help your city identify and resolve problems faster.
           </p>
+
         </div>
 
         {/* ================= FORM CARD ================= */}
@@ -96,6 +132,7 @@ function ReportIssue() {
           {/* ================= ISSUE TITLE ================= */}
 
           <div className="form-group">
+
             <label>
               Issue Title
             </label>
@@ -110,12 +147,22 @@ function ReportIssue() {
 
             <p className="character-count">
               {title.length}/100 characters
+
+              {title.length >= 90 && title.length < 100 && (
+                <span> — Almost at the limit</span>
+              )}
+
+              {title.length === 100 && (
+                <span> — Maximum limit reached</span>
+              )}
             </p>
+
           </div>
 
           {/* ================= CATEGORY ================= */}
 
           <div className="form-group">
+
             <label>
               Issue Category
             </label>
@@ -124,6 +171,7 @@ function ReportIssue() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
+
               <option value="">
                 Select a category
               </option>
@@ -151,12 +199,15 @@ function ReportIssue() {
               <option value="drainage">
                 Drainage
               </option>
+
             </select>
+
           </div>
 
           {/* ================= DESCRIPTION ================= */}
 
           <div className="form-group">
+
             <label>
               Description
             </label>
@@ -167,26 +218,30 @@ function ReportIssue() {
               value={description}
               maxLength={500}
               onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+            />
 
             <p className="character-count">
               {description.length}/500 characters
             </p>
+
           </div>
 
           {/* ================= MAP ================= */}
 
           <div className="form-group">
+
             <label>
               Issue Location
             </label>
 
             <div className="map-wrapper">
+
               <MapContainer
                 center={[23.2599, 77.4126]}
                 zoom={13}
                 className="issue-map"
               >
+
                 <TileLayer
                   attribution="&copy; OpenStreetMap contributors"
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -204,10 +259,12 @@ function ReportIssue() {
                     ]}
                   />
                 )}
+
               </MapContainer>
+
             </div>
 
-            {/* Location Info */}
+            {/* ================= LOCATION INFO ================= */}
 
             {location ? (
               <p className="location-text">
@@ -220,72 +277,69 @@ function ReportIssue() {
                 Click on the map to select the issue location.
               </p>
             )}
+
           </div>
 
-         {/* ================= PHOTO ================= */}
+          {/* ================= PHOTO ================= */}
 
-<div className="form-group">
-  <label>
-    Photo Evidence
-  </label>
+          <div className="form-group">
 
-  <div className="upload-box">
-    {!photo ? (
-      <>
-        <span className="upload-icon">
-          📷
-        </span>
+            <label>
+              Photo Evidence
+            </label>
 
-        <p>
-          Upload a photo of the issue
-        </p>
+            <div className="upload-box">
 
-        <label className="upload-btn">
-          Choose Photo
+              {!photo ? (
+                <>
+                  <span className="upload-icon">
+                    📷
+                  </span>
 
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files[0];
+                  <p>
+                    Upload a photo of the issue
+                  </p>
 
-              if (file) {
-                const maxSize = 5 * 1024 * 1024; // 5 MB
+                  <label className="upload-btn">
 
-                if (file.size > maxSize) {
-                  alert("Photo size must be less than 5 MB.");
-                  e.target.value = "";
-                  return;
-                }
+                    Choose Photo
 
-                setPhoto(URL.createObjectURL(file));
-              }
-            }}
-          />
-        </label>
-      </>
-    ) : (
-      <div className="photo-preview">
-        <img
-          src={photo}
-          alt="Issue preview"
-        />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handlePhotoChange}
+                    />
 
-        <button
-          type="button"
-          className="remove-photo"
-          onClick={() => setPhoto(null)}
-        >
-          Remove Photo
-        </button>
-      </div>
-    )}
-  </div>
-</div>
+                  </label>
+                </>
+              ) : (
+                <div className="photo-preview">
+
+                  <img
+                    src={photo}
+                    alt="Issue preview"
+                  />
+
+                  <button
+                    type="button"
+                    className="remove-photo"
+                    onClick={handleRemovePhoto}
+                  >
+                    Remove Photo
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+
+          </div>
+
           {/* ================= PRIORITY ================= */}
 
           <div className="form-group">
+
             <label>
               Priority
             </label>
@@ -294,6 +348,7 @@ function ReportIssue() {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
+
               <option value="low">
                 Low
               </option>
@@ -305,7 +360,9 @@ function ReportIssue() {
               <option value="high">
                 High
               </option>
+
             </select>
+
           </div>
 
           {/* ================= SUBMIT ================= */}
@@ -322,11 +379,13 @@ function ReportIssue() {
 
           {submitted && (
             <div className="success-message">
+
               <div className="success-icon">
                 ✓
               </div>
 
               <div>
+
                 <h3>
                   Issue Reported Successfully!
                 </h3>
@@ -335,11 +394,14 @@ function ReportIssue() {
                   Your civic issue has been submitted.
                   You can track its progress from your dashboard.
                 </p>
+
               </div>
+
             </div>
           )}
 
         </div>
+
       </div>
     </div>
   );
