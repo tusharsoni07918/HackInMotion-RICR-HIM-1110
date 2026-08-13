@@ -85,6 +85,222 @@ img {
   background: var(--white);
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+/* =========================================================
+   NAVBAR — CIVICGUARDIAN
+========================================================= */
+
+.navbar {
+  width: 100%;
+  height: 72px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+  height: 72px;
+
+  margin: 0 auto;
+  padding: 0 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #14532d;
+  font-size: 21px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.logo-icon {
+  font-size: 25px;
+  line-height: 1;
+}
+
+/* Navigation Links */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  margin-left: auto;
+  margin-right: 35px;
+
+  height: 72px;
+}
+
+.nav-links a {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  color: #475569;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #16a34a;
+}
+
+/* Buttons Container */
+
+.nav-buttons {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+/* Login + Report */
+
+.login-btn,
+.report-btn {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 17px;
+
+  box-sizing: border-box;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  margin: 0;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Login */
+
+.login-btn {
+  min-width: 70px;
+
+  background: #ffffff;
+
+  border: 1px solid #d1d5db;
+
+  color: #111827;
+}
+
+.login-btn:hover {
+  background: #f8fafc;
+
+  border-color: #16a34a;
+
+  color: #166534;
+}
+
+/* Report Issue */
+
+.report-btn {
+  min-width: 154px;
+
+  background: #16a34a;
+
+  border: 1px solid #16a34a;
+
+  color: #ffffff;
+}
+
+.report-btn:hover {
+  background: #15803d;
+
+  border-color: #15803d;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NAVBAR RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .navbar-container {
+    padding: 0 18px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-buttons {
+    margin-left: auto;
+  }
+
+  .login-btn,
+  .report-btn {
+    height: 38px;
+    padding: 0 13px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    font-size: 22px;
+  }
+
+  .report-btn {
+    display: none;
+  }
+
+}
+
+
+>>>>>>> origin/main
 /* =========================================================
    HERO SECTION
 ========================================================= */
@@ -2038,4 +2254,496 @@ img {
   .stat-item:not(:last-child)::after {
     height: 40px;
   }
+}
+
+
+/* ================= AUTH PAGE ================= */
+
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background: linear-gradient(
+    135deg,
+    #f0fdf4,
+    #ffffff
+  );
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 40px;
+
+  background: #ffffff;
+
+  border: 1px solid #dcfce7;
+  border-radius: 14px;
+
+  box-shadow: 0 20px 50px rgba(22, 163, 74, 0.12);
+
+  text-align: center;
+}
+
+/* Logo */
+
+.auth-logo {
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f0fdf4;
+
+  border-radius: 12px;
+
+  font-size: 30px;
+}
+
+/* Heading */
+
+.auth-card h1 {
+  margin: 0 0 10px;
+
+  font-size: 32px;
+  font-weight: 700;
+
+  color: #14532d;
+}
+
+.auth-subtitle {
+  margin: 0 0 30px;
+
+  color: #64748b;
+
+  font-size: 15px;
+}
+
+/* Form */
+
+.form-group {
+  margin-bottom: 20px;
+
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #166534;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #14532d;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #16a34a;
+
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+/* Login Button */
+
+.auth-btn {
+  width: 100%;
+
+  margin-top: 5px;
+
+  padding: 13px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #16a34a;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.auth-btn:hover {
+  background: #15803d;
+}
+
+/* Register */
+
+.auth-footer {
+  margin-top: 25px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: #16a34a;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  color: #15803d;
+  text-decoration: underline;
+}
+
+/* Back Home */
+
+.back-home {
+  display: inline-block;
+
+  margin-top: 18px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  text-decoration: none;
+}
+
+.back-home:hover {
+  color: #16a34a;
+}
+
+/* Mobile */
+
+@media (max-width: 500px) {
+
+  .auth-page {
+    padding: 20px;
+  }
+
+  .auth-card {
+    padding: 30px 22px;
+  }
+
+  .auth-card h1 {
+    font-size: 27px;
+  }
+
+}
+
+
+
+
+/* ================= REPORT ISSUE PAGE ================= */
+
+.report-page {
+  min-height: calc(100vh - 72px);
+  background: #f0fdf4;
+  padding: 60px 20px;
+}
+
+.report-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.report-header {
+  margin-bottom: 30px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 25px;
+
+  color: #15803d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.report-header .section-label {
+  color: #16a34a;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.report-header h1 {
+  margin: 0 0 10px;
+  font-size: 42px;
+  color: #14532d;
+}
+
+.report-header > p:last-child {
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* Form Card */
+
+.report-card {
+  background: #ffffff;
+
+  padding: 35px;
+
+  border: 1px solid #dcfce7;
+  border-radius: 16px;
+
+  box-shadow: 0 15px 40px rgba(22, 101, 52, 0.08);
+}
+
+/* Form */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+
+  color: #14532d;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #16a34a;
+
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Upload */
+
+.upload-box {
+  border: 2px dashed #bbf7d0;
+  border-radius: 10px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  background: #f0fdf4;
+}
+
+.upload-box span {
+  font-size: 30px;
+}
+
+.upload-box p {
+  margin: 8px 0 15px;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upload-box input {
+  width: auto;
+  border: none;
+}
+
+/* Submit */
+
+.submit-issue-btn {
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #16a34a;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.submit-issue-btn:hover {
+  background: #15803d;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .report-page {
+    padding: 40px 15px;
+  }
+
+  .report-header h1 {
+    font-size: 32px;
+  }
+
+  .report-card {
+    padding: 22px;
+  }
+
+}
+
+
+
+/* ================= ISSUE MAP ================= */
+
+.map-wrapper {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #bbf7d0;
+}
+
+.issue-map {
+  width: 100%;
+  height: 100%;
+}
+
+.location-text {
+  margin-top: 10px;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.location-hint {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* ================= PHOTO UPLOAD ================= */
+
+.upload-box {
+  border: 2px dashed #bbf7d0;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  background: #f0fdf4;
+}
+
+.upload-icon {
+  display: block;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.upload-box p {
+  margin-bottom: 15px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #16a34a;
+  color: white;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #15803d;
+}
+
+/* Photo Preview */
+
+.photo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.photo-preview img {
+  width: 100%;
+  max-width: 450px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #bbf7d0;
+}
+
+.remove-photo {
+  padding: 9px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+  background: #fff;
+  color: #dc2626;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.remove-photo:hover {
+  background: #fef2f2;
 }

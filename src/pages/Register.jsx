@@ -1,23 +1,32 @@
+import { Link } from "react-router-dom";
+
 function Register() {
   return (
     <div className="auth-page">
 
       <div className="auth-card">
 
+        {/* Logo */}
+
+
         <h1>Create Account</h1>
 
-        <p>Join CivicGuardian and help improve your city</p>
+        <p className="auth-subtitle">
+          Join CivicGuardian and help improve your city
+        </p>
 
         <form>
 
+          {/* Name */}
           <div className="form-group">
             <label>Full Name</label>
             <input
               type="text"
-              placeholder="Enter your name"
+              placeholder="Enter your full name"
             />
           </div>
 
+          {/* Email */}
           <div className="form-group">
             <label>Email</label>
             <input
@@ -26,6 +35,7 @@ function Register() {
             />
           </div>
 
+          {/* Password */}
           <div className="form-group">
             <label>Password</label>
             <input
@@ -34,14 +44,7 @@ function Register() {
             />
           </div>
 
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              placeholder="Confirm your password"
-            />
-          </div>
-
+          {/* Role */}
           <div className="form-group">
             <label>Register As</label>
 
@@ -59,7 +62,7 @@ function Register() {
 
         <p className="auth-footer">
           Already have an account?
-          <a href="/login"> Login</a>
+          <Link to="/login"> Login</Link>
         </p>
 
       </div>

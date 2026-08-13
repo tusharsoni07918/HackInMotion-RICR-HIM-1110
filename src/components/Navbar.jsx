@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import "./Navbar.css";
 
 function Navbar() {
@@ -41,14 +43,15 @@ function Navbar() {
         {/* RIGHT SIDE */}
         <div className="navbar-actions">
 
-          <button className="login-btn">
+          <Link to="/login" className="login-btn">
             Login
-          </button>
+          </Link>
 
-          <button className="report-btn">
+          {/* Report Issue */}
+          <Link to="/report-issue" className="report-btn">
             Report an Issue
             <span>→</span>
-          </button>
+          </Link>
 
         </div>
 
