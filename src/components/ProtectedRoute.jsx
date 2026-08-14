@@ -1,28 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRoute({ allowedRole }) {
+function ProtectedRoute({ allowedRole, children }) {
+  const token = localStorage.getItem("civicGuardianToken");
 
-  const token = localStorage.getItem(
-    "civicGuardianToken"
-  );
-
-  const userData = localStorage.getItem(
-    "civicGuardianUser"
-  );
+  const userData = localStorage.getItem("civicGuardianUser");
 
   /* =====================================================
      NOT LOGGED IN
   ===================================================== */
 
   if (!token || !userData) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
+    return <Navigate to="/login" replace />;
   }
-
 
   /* =====================================================
      GET USER
@@ -33,54 +22,31 @@ function ProtectedRoute({ allowedRole }) {
   try {
     user = JSON.parse(userData);
   } catch (error) {
+    localStorage.removeItem("civicGuardianToken");
+    localStorage.removeItem("civicGuardianUser");
 
-    localStorage.removeItem(
-      "civicGuardianToken"
-    );
-
-    localStorage.removeItem(
-      "civicGuardianUser"
-    );
-
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
+    return <Navigate to="/login" replace />;
   }
-
 
   /* =====================================================
      ROLE CHECK
   ===================================================== */
 
-  if (
-    allowedRole &&
-    user.role !== allowedRole
-  ) {
-
+  if (allowedRole && user.role !== allowedRole) {
     if (user.role === "admin") {
-      return (
-        <Navigate
-          to="/admin"
-          replace
-        />
-      );
+      return <Navigate to="/admin" replace />;
     }
 
-    return (
-      <Navigate
-        to="/"
-        replace
-      />
-    );
+    return <Navigate to="/" replace />;
   }
-
 
   /* =====================================================
      ALLOWED
   ===================================================== */
+
+  if (children) {
+    return children;
+  }
 
   return <Outlet />;
 }

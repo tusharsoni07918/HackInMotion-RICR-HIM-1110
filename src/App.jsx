@@ -18,107 +18,60 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./App.css";
 
-
-/* =========================================================
-   HOME PAGE
-========================================================= */
-
 function Home() {
   return (
-    <div className="app">
-
+    <>
       <Navbar />
-
-      <main>
-        <Hero />
-        <HomeSections />
-      </main>
-
-    </div>
+      <Hero />
+      <HomeSections />
+    </>
   );
 }
-
-
-/* =========================================================
-   APP
-========================================================= */
 
 function App() {
   return (
     <BrowserRouter>
-
       <Routes>
 
-        {/* =================================================
-            PUBLIC ROUTES
-        ================================================= */}
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
 
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected Citizen Route */}
         <Route
-          path="/"
-          element={<Home />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-
-        {/* =================================================
-            LOGGED-IN CITIZEN ROUTES
-        ================================================= */}
-
-        <Route
+          path="/report"
           element={
-            <ProtectedRoute allowedRole="citizen" />
+            <ProtectedRoute>
+              <ReportIssue />
+            </ProtectedRoute>
           }
-        >
-
-          {/* REPORT ISSUE */}
-
-          <Route
-            path="/report-issue"
-            element={<ReportIssue />}
-          />
-
-          {/* CITIZEN DASHBOARD */}
-
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
-
-        </Route>
-
-
-        {/* =================================================
-            ADMIN ROUTES
-        ================================================= */}
+        />
 
         <Route
+          path="/dashboard"
           element={
-            <ProtectedRoute allowedRole="admin" />
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
           }
-        >
+        />
 
-          <Route
-            path="/admin"
-            element={<AdminDashboard />}
-          />
-
-        </Route>
-
+        {/* Protected Admin Route */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
-
     </BrowserRouter>
   );
 }
-
 
 export default App;

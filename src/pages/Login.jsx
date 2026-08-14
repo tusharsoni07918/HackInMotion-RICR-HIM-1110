@@ -124,6 +124,7 @@ function Login() {
                 setEmail(e.target.value)
               }
               autoComplete="email"
+              required
             />
 
           </div>
@@ -144,6 +145,7 @@ function Login() {
                 setPassword(e.target.value)
               }
               autoComplete="current-password"
+              required
             />
 
           </div>
@@ -162,7 +164,6 @@ function Login() {
                 setRole(e.target.value)
               }
             >
-
               <option value="citizen">
                 Citizen
               </option>
@@ -170,7 +171,6 @@ function Login() {
               <option value="admin">
                 Administrator
               </option>
-
             </select>
 
           </div>

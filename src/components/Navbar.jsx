@@ -34,6 +34,7 @@ function Navbar() {
 
         {/* RIGHT ACTIONS */}
         <div className="navbar-actions">
+
           <Link to="/login" className="login-btn">
             Login
           </Link>
@@ -42,6 +43,7 @@ function Navbar() {
             Report an Issue
             <span className="report-arrow">→</span>
           </Link>
+
         </div>
 
         {/* MOBILE MENU */}

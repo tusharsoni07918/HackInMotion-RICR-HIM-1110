@@ -8,6 +8,7 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("citizen");
 
   const [loading, setLoading] = useState(false);
@@ -39,10 +40,15 @@ function Register() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     try {
       setLoading(true);
 
-      const data = await registerUser({
+      await registerUser({
         name: name.trim(),
         email: email.trim(),
         password,
@@ -52,7 +58,6 @@ function Register() {
       alert("Registration successful! Please login.");
 
       navigate("/login");
-
     } catch (error) {
       setError(error.message || "Registration failed.");
     } finally {
@@ -65,10 +70,7 @@ function Register() {
 
       <div className="auth-card">
 
-        {/* =================================================
-            LOGO
-        ================================================= */}
-
+        {/* LOGO */}
         <Link to="/" className="auth-logo">
 
           <div className="auth-logo-box">
@@ -82,10 +84,7 @@ function Register() {
         </Link>
 
 
-        {/* =================================================
-            HEADING
-        ================================================= */}
-
+        {/* HEADING */}
         <div className="auth-heading">
 
           <h1>
@@ -99,10 +98,7 @@ function Register() {
         </div>
 
 
-        {/* =================================================
-            ERROR
-        ================================================= */}
-
+        {/* ERROR */}
         {error && (
           <div className="auth-error">
             {error}
@@ -110,14 +106,10 @@ function Register() {
         )}
 
 
-        {/* =================================================
-            REGISTER FORM
-        ================================================= */}
-
+        {/* REGISTER FORM */}
         <form onSubmit={handleSubmit}>
 
-          {/* Name */}
-
+          {/* NAME */}
           <div className="form-group">
 
             <label>
@@ -132,13 +124,13 @@ function Register() {
                 setName(e.target.value)
               }
               autoComplete="name"
+              required
             />
 
           </div>
 
 
-          {/* Email */}
-
+          {/* EMAIL */}
           <div className="form-group">
 
             <label>
@@ -153,13 +145,13 @@ function Register() {
                 setEmail(e.target.value)
               }
               autoComplete="email"
+              required
             />
 
           </div>
 
 
-          {/* Password */}
-
+          {/* PASSWORD */}
           <div className="form-group">
 
             <label>
@@ -174,13 +166,34 @@ function Register() {
                 setPassword(e.target.value)
               }
               autoComplete="new-password"
+              required
             />
 
           </div>
 
 
-          {/* Role */}
+          {/* CONFIRM PASSWORD */}
+          <div className="form-group">
 
+            <label>
+              Confirm Password
+            </label>
+
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(e) =>
+                setConfirmPassword(e.target.value)
+              }
+              autoComplete="new-password"
+              required
+            />
+
+          </div>
+
+
+          {/* ROLE */}
           <div className="form-group">
 
             <label>
@@ -193,7 +206,6 @@ function Register() {
                 setRole(e.target.value)
               }
             >
-
               <option value="citizen">
                 Citizen
               </option>
@@ -201,20 +213,17 @@ function Register() {
               <option value="admin">
                 Administrator
               </option>
-
             </select>
 
           </div>
 
 
-          {/* Submit */}
-
+          {/* SUBMIT */}
           <button
             type="submit"
             className="auth-btn"
             disabled={loading}
           >
-
             {loading
               ? "Creating Account..."
               : "Create Account"}
@@ -224,16 +233,12 @@ function Register() {
                 →
               </span>
             )}
-
           </button>
 
         </form>
 
 
-        {/* =================================================
-            LOGIN
-        ================================================= */}
-
+        {/* LOGIN */}
         <p className="auth-footer">
 
           Already have an account?{" "}
@@ -245,10 +250,7 @@ function Register() {
         </p>
 
 
-        {/* =================================================
-            BACK HOME
-        ================================================= */}
-
+        {/* BACK HOME */}
         <Link
           to="/"
           className="back-home"
@@ -262,4 +264,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Register;git status
