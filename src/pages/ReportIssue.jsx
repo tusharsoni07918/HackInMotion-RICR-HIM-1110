@@ -1,13 +1,14 @@
 import { useState } from "react";
 import {
-    MapContainer,
-    Marker,
-    TileLayer,
-    useMapEvents,
+  MapContainer,
+  Marker,
+  TileLayer,
+  useMapEvents,
 } from "react-leaflet";
+import { Link, useNavigate } from "react-router-dom";
 
 import "leaflet/dist/leaflet.css";
-import { Link } from "react-router-dom";
+import "./ReportIssue.css";
 
 
 /* ================= LOCATION MARKER ================= */
@@ -29,30 +30,51 @@ function LocationMarker({ setLocation }) {
 /* ================= REPORT ISSUE ================= */
 
 function ReportIssue() {
+  const navigate = useNavigate();
 
   /* ================= STATES ================= */
 
   const [location, setLocation] = useState(null);
-
   const [photo, setPhoto] = useState(null);
 
   const [title, setTitle] = useState("");
-
   const [category, setCategory] = useState("");
-
   const [description, setDescription] = useState("");
-
   const [priority, setPriority] = useState("low");
 
   const [submitted, setSubmitted] = useState(false);
-
   const [loading, setLoading] = useState(false);
+
+
+  /* ================= REMOVE PHOTO ================= */
+
+  const removePhoto = () => {
+    if (photo) {
+      URL.revokeObjectURL(photo);
+    }
+
+    setPhoto(null);
+  };
+
+
+  /* ================= PHOTO CHANGE ================= */
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    if (photo) {
+      URL.revokeObjectURL(photo);
+    }
+
+    setPhoto(URL.createObjectURL(file));
+  };
 
 
   /* ================= SUBMIT ================= */
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
     if (!title.trim()) {
       alert("Please enter issue title.");
       return;
@@ -73,14 +95,117 @@ function ReportIssue() {
       return;
     }
 
+
+    /* ================= GET TOKEN ================= */
+
+    const token = localStorage.getItem("civicGuardianToken");
+
+    if (!token) {
+      alert("Please login before reporting an issue.");
+      navigate("/login");
+      return;
+    }
+
+
     setLoading(true);
+    setSubmitted(false);
 
-    // Demo loading effect
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      /* ================= API REQUEST ================= */
+
+      const response = await fetch(
+        "http://localhost:5000/api/issues",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            title: title.trim(),
+
+            category,
+
+            description: description.trim(),
+
+            location: {
+              lat: Number(location.lat),
+              lng: Number(location.lng),
+            },
+
+            priority,
+          }),
+        }
+      );
+
+
+      const data = await response.json();
+
+
+      /* ================= AUTHENTICATION ERROR ================= */
+
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem("civicGuardianToken");
+        localStorage.removeItem("civicGuardianUser");
+
+        alert(
+          `${data.message || "Your login session is invalid or expired."} Please login again.`
+        );
+
+        navigate("/login");
+        return;
+      }
+
+
+      /* ================= BACKEND ERROR ================= */
+
+      if (!response.ok) {
+        alert(
+          data.message ||
+            "Unable to submit the issue. Please try again."
+        );
+
+        return;
+      }
+
+
+      /* ================= SUCCESS ================= */
+
+      console.log(
+        "Issue created successfully:",
+        data
+      );
+
       setSubmitted(true);
-    }, 800);
 
+
+      /* ================= RESET FORM ================= */
+
+      setTitle("");
+      setCategory("");
+      setDescription("");
+      setPriority("low");
+      setLocation(null);
+
+      removePhoto();
+
+
+    } catch (error) {
+      console.error(
+        "Error reporting issue:",
+        error
+      );
+
+      alert(
+        "Unable to connect to the server. Please check that the backend is running."
+      );
+
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -93,7 +218,10 @@ function ReportIssue() {
 
         <div className="report-header">
 
-          <Link to="/" className="back-link">
+          <Link
+            to="/"
+            className="back-link"
+          >
             ← Back to Home
           </Link>
 
@@ -128,7 +256,9 @@ function ReportIssue() {
               type="text"
               placeholder="e.g. Large pothole near main road"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) =>
+                setTitle(e.target.value)
+              }
             />
 
           </div>
@@ -144,7 +274,9 @@ function ReportIssue() {
 
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) =>
+                setCategory(e.target.value)
+              }
             >
 
               <option value="">
@@ -192,6 +324,7 @@ function ReportIssue() {
               rows="5"
               placeholder="Describe the issue in detail..."
               value={description}
+              maxLength={500}
               onChange={(e) =>
                 setDescription(e.target.value)
               }
@@ -226,14 +359,12 @@ function ReportIssue() {
                 />
 
                 {location && (
-
                   <Marker
                     position={[
                       location.lat,
                       location.lng,
                     ]}
                   />
-
                 )}
 
               </MapContainer>
@@ -247,7 +378,8 @@ function ReportIssue() {
 
               <p className="location-text">
                 📍 Location selected:{" "}
-                {location.lat.toFixed(5)},{" "}
+                {location.lat.toFixed(5)}
+                {", "}
                 {location.lng.toFixed(5)}
               </p>
 
@@ -292,19 +424,8 @@ function ReportIssue() {
                       type="file"
                       accept="image/*"
                       hidden
-                      onChange={(e) => {
-
-                        const file = e.target.files[0];
-
-                        if (file) {
-
-                          setPhoto(
-                            URL.createObjectURL(file)
-                          );
-
-                        }
-
-                      }}
+                      disabled={loading}
+                      onChange={handlePhotoChange}
                     />
 
                   </label>
@@ -323,7 +444,8 @@ function ReportIssue() {
                   <button
                     type="button"
                     className="remove-photo"
-                    onClick={() => setPhoto(null)}
+                    onClick={removePhoto}
+                    disabled={loading}
                   >
                     Remove Photo
                   </button>
@@ -350,6 +472,7 @@ function ReportIssue() {
               onChange={(e) =>
                 setPriority(e.target.value)
               }
+              disabled={loading}
             >
 
               <option value="low">
@@ -380,8 +503,7 @@ function ReportIssue() {
 
             {loading
               ? "Submitting..."
-              : "Submit Issue"
-            }
+              : "Submit Issue"}
 
           </button>
 
@@ -406,6 +528,10 @@ function ReportIssue() {
                   Your civic issue has been submitted.
                   You can track its progress from your dashboard.
                 </p>
+
+                <Link to="/dashboard">
+                  Go to Dashboard →
+                </Link>
 
               </div>
 

@@ -22,8 +22,8 @@ function Hero() {
           </div>
 
           <h1 className="hero-title">
-            Make Your City
-            <span>Better.</span>
+            Shape the city
+            <span>you want.</span>
           </h1>
 
           <p className="hero-description">
