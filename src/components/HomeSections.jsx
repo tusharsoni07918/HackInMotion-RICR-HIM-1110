@@ -1,32 +1,31 @@
 function HomeSections() {
   return (
     <>
-
       <section className="stats-section">
-  <div className="stats-container">
+        <div className="stats-container">
 
-    <div className="stat-item">
-      <div className="stat-number">1,240+</div>
-      <div className="stat-label">Issues Reported</div>
-    </div>
+          <div className="stat-item">
+            <div className="stat-number">1,240+</div>
+            <div className="stat-label">Issues Reported</div>
+          </div>
 
-    <div className="stat-item">
-      <div className="stat-number">890+</div>
-      <div className="stat-label">Issues Resolved</div>
-    </div>
+          <div className="stat-item">
+            <div className="stat-number">890+</div>
+            <div className="stat-label">Issues Resolved</div>
+          </div>
 
-    <div className="stat-item">
-      <div className="stat-number">32</div>
-      <div className="stat-label">City Wards</div>
-    </div>
+          <div className="stat-item">
+            <div className="stat-number">32</div>
+            <div className="stat-label">City Wards</div>
+          </div>
 
-    <div className="stat-item">
-      <div className="stat-number">94%</div>
-      <div className="stat-label">Citizen Satisfaction</div>
-    </div>
+          <div className="stat-item">
+            <div className="stat-number">94%</div>
+            <div className="stat-label">Citizen Satisfaction</div>
+          </div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
 
       {/* =========================================
@@ -58,11 +57,16 @@ function HomeSections() {
 
           <div className="steps-grid">
 
+            {/* STEP 01 */}
+
             <div className="step-card">
 
               <div className="step-top">
                 <span>01</span>
-                <div>📸</div>
+
+                <div className="step-icon">
+                  📍
+                </div>
               </div>
 
               <h3>Report an Issue</h3>
@@ -79,11 +83,16 @@ function HomeSections() {
             </div>
 
 
+            {/* STEP 02 */}
+
             <div className="step-card">
 
               <div className="step-top">
                 <span>02</span>
-                <div>🎯</div>
+
+                <div className="step-icon">
+                  🧭
+                </div>
               </div>
 
               <h3>Smart Routing</h3>
@@ -100,11 +109,16 @@ function HomeSections() {
             </div>
 
 
+            {/* STEP 03 */}
+
             <div className="step-card">
 
               <div className="step-top">
                 <span>03</span>
-                <div>📊</div>
+
+                <div className="step-icon">
+                  📈
+                </div>
               </div>
 
               <h3>Track Progress</h3>
@@ -121,11 +135,16 @@ function HomeSections() {
             </div>
 
 
+            {/* STEP 04 */}
+
             <div className="step-card">
 
               <div className="step-top">
                 <span>04</span>
-                <div>✓</div>
+
+                <div className="step-icon">
+                  🛡️
+                </div>
               </div>
 
               <h3>Verify Resolution</h3>
@@ -294,6 +313,7 @@ function HomeSections() {
 
                 <div>
                   <strong>Easy Reporting</strong>
+
                   <small>
                     Report problems in just a few clicks.
                   </small>
@@ -306,6 +326,7 @@ function HomeSections() {
 
                 <div>
                   <strong>Complete Transparency</strong>
+
                   <small>
                     Know what happens to your complaint.
                   </small>
@@ -318,6 +339,7 @@ function HomeSections() {
 
                 <div>
                   <strong>Citizen Verification</strong>
+
                   <small>
                     Citizens help confirm successful resolutions.
                   </small>
@@ -337,10 +359,15 @@ function HomeSections() {
 
               <div>
                 <small>REPORT STATUS</small>
-                <h3>Street Light Issue</h3>
+
+                <h3>
+                  Street Light Issue
+                </h3>
               </div>
 
-              <span>Resolved</span>
+              <span>
+                Resolved
+              </span>
 
             </div>
 
@@ -370,10 +397,15 @@ function HomeSections() {
 
 
             <div className="progress-labels">
+
               <span>Reported</span>
+
               <span>Assigned</span>
+
               <span>In Progress</span>
+
               <span>Resolved</span>
+
             </div>
 
 
@@ -381,12 +413,18 @@ function HomeSections() {
 
               <div>
                 <small>Reported</small>
-                <strong>12 Aug 2026</strong>
+
+                <strong>
+                  12 Aug 2026
+                </strong>
               </div>
 
               <div>
                 <small>Department</small>
-                <strong>Municipal Services</strong>
+
+                <strong>
+                  Municipal Services
+                </strong>
               </div>
 
             </div>
@@ -402,7 +440,10 @@ function HomeSections() {
           CTA
       ========================================= */}
 
-      <section className="cta-section" id="report">
+      <section
+        className="cta-section"
+        id="report"
+      >
 
         <div className="cta-container">
 
@@ -427,8 +468,11 @@ function HomeSections() {
 
 
           <button className="cta-button">
+
             Report an Issue
+
             <span>→</span>
+
           </button>
 
         </div>
@@ -447,8 +491,11 @@ function HomeSections() {
           <div className="footer-brand">
 
             <div className="footer-logo">
+
               <span>✦</span>
+
               Civic<span>Guardian</span>
+
             </div>
 
             <p>
@@ -461,33 +508,63 @@ function HomeSections() {
 
           <div className="footer-column">
 
-            <h4>Platform</h4>
+            <h4>
+              Platform
+            </h4>
 
-            <a href="#report">Report an Issue</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#home">Track Issues</a>
+            <a href="#report">
+              Report an Issue
+            </a>
+
+            <a href="#how-it-works">
+              How It Works
+            </a>
+
+            <a href="#home">
+              Track Issues
+            </a>
 
           </div>
 
 
           <div className="footer-column">
 
-            <h4>Company</h4>
+            <h4>
+              Company
+            </h4>
 
-            <a href="#about">About</a>
-            <a href="#about">Contact</a>
-            <a href="#about">Privacy</a>
+            <a href="#about">
+              About
+            </a>
+
+            <a href="#about">
+              Contact
+            </a>
+
+            <a href="#about">
+              Privacy
+            </a>
 
           </div>
 
 
           <div className="footer-column">
 
-            <h4>For Cities</h4>
+            <h4>
+              For Cities
+            </h4>
 
-            <a href="#about">City Dashboard</a>
-            <a href="#about">Administration</a>
-            <a href="#about">Partners</a>
+            <a href="#about">
+              City Dashboard
+            </a>
+
+            <a href="#about">
+              Administration
+            </a>
+
+            <a href="#about">
+              Partners
+            </a>
 
           </div>
 

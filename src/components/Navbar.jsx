@@ -9,7 +9,7 @@ function Navbar() {
       <div className="navbar-inner">
 
         {/* LOGO */}
-        <a href="#home" className="navbar-logo">
+        <Link to="/" className="navbar-logo">
 
           <div className="logo-box">
             <span>✦</span>
@@ -19,15 +19,15 @@ function Navbar() {
             Civic<span>Guardian</span>
           </span>
 
-        </a>
+        </Link>
 
 
         {/* NAVIGATION */}
         <nav className="navbar-links">
 
-          <a href="#home" className="nav-link active">
+          <Link to="/" className="nav-link active">
             Home
-          </a>
+          </Link>
 
           <a href="#how-it-works" className="nav-link">
             How It Works
@@ -43,23 +43,25 @@ function Navbar() {
         {/* RIGHT SIDE */}
         <div className="navbar-actions">
 
-          <Link to="/login" className="login-btn">
+          {/* LOGIN */}
+          <Link
+            to="/login"
+            className="login-btn"
+          >
             Login
           </Link>
 
-          {/* Report Issue */}
-          <Link to="/report-issue" className="report-btn">
+
+          {/* REPORT ISSUE */}
+          <Link
+            to="/login"
+            className="report-btn"
+          >
             Report an Issue
             <span>→</span>
           </Link>
 
         </div>
-
-
-        {/* MOBILE */}
-        <button className="mobile-menu">
-          ☰
-        </button>
 
       </div>
 

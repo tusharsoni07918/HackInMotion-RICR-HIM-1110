@@ -1,12 +1,24 @@
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // User is now logged in
+    localStorage.setItem("civicguardian_logged_in", "true");
+
+    // After login → Report Issue
+    navigate("/report-issue");
+  };
+
   return (
     <div className="auth-page">
 
       <div className="auth-card">
 
-        
+       
 
         <h1>Welcome Back</h1>
 
@@ -14,7 +26,7 @@ function Login() {
           Login to your CivicGuardian account
         </p>
 
-        <form>
+        <form onSubmit={handleLogin}>
 
           <div className="form-group">
             <label>Email</label>
@@ -22,6 +34,7 @@ function Login() {
             <input
               type="email"
               placeholder="Enter your email"
+              required
             />
           </div>
 
@@ -31,13 +44,14 @@ function Login() {
             <input
               type="password"
               placeholder="Enter your password"
+              required
             />
           </div>
 
           <div className="form-group">
             <label>Login As</label>
 
-            <select defaultValue="citizen">
+            <select>
               <option value="citizen">
                 Citizen
               </option>
@@ -63,10 +77,6 @@ function Login() {
             Register
           </Link>
         </p>
-
-        <Link to="/" className="back-home">
-          ← Back to Home
-        </Link>
 
       </div>
 
