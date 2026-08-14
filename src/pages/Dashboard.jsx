@@ -105,11 +105,11 @@ function Dashboard() {
           </div>
 
           <h1>
-            Civic Issue Dashboard
+            Shape Your City
           </h1>
 
           <p>
-            Track reported civic issues and monitor their progress.
+            Track civic issues, monitor their progress, and make a difference in your community.
           </p>
 
         </div>
