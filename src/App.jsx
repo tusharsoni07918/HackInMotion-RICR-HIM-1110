@@ -42,7 +42,7 @@ function App() {
 
         {/* Protected Citizen Route */}
         <Route
-          path="/report"
+          path="/report-issue"
           element={
             <ProtectedRoute>
               <ReportIssue />
