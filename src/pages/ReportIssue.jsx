@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -6,15 +6,22 @@ import {
   useMapEvents,
 } from "react-leaflet";
 
+import { Link, useNavigate } from "react-router-dom";
+
 import "leaflet/dist/leaflet.css";
-import { Link } from "react-router-dom";
 
 
-/* ================= LOCATION MARKER ================= */
 
-function LocationMarker({ setLocation }) {
+
+/* =========================================================
+   LOCATION MARKER
+========================================================= */
+
+function LocationMarker({ setLocation, disabled }) {
   useMapEvents({
     click(e) {
+      if (disabled) return;
+
       setLocation({
         lat: e.latlng.lat,
         lng: e.latlng.lng,
@@ -26,366 +33,808 @@ function LocationMarker({ setLocation }) {
 }
 
 
-/* ================= REPORT ISSUE ================= */
+/* =========================================================
+   REPORT ISSUE
+========================================================= */
 
 function ReportIssue() {
+  const navigate = useNavigate();
 
-  /* ================= STATES ================= */
+
+  /* =======================================================
+     STATES
+  ======================================================= */
 
   const [location, setLocation] = useState(null);
+
   const [photo, setPhoto] = useState(null);
 
+  const [photoFile, setPhotoFile] = useState(null);
+
   const [title, setTitle] = useState("");
+
   const [category, setCategory] = useState("");
+
   const [description, setDescription] = useState("");
+
   const [priority, setPriority] = useState("low");
 
   const [submitted, setSubmitted] = useState(false);
 
+  const [loading, setLoading] = useState(false);
 
-  /* ================= SUBMIT ================= */
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleSubmit = () => {
 
-    if (!title.trim()) {
-      alert("Please enter issue title.");
-      return;
+  /* =======================================================
+     CHECK LOGIN
+  ======================================================= */
+
+  useEffect(() => {
+    const token = localStorage.getItem(
+      "civicGuardianToken"
+    );
+
+    const user = localStorage.getItem(
+      "civicGuardianUser"
+    );
+
+    if (token && user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
+  }, []);
 
-    if (!category) {
-      alert("Please select an issue category.");
-      return;
-    }
 
-    if (!description.trim()) {
-      alert("Please describe the issue.");
-      return;
-    }
+  /* =======================================================
+     HANDLE LOGIN REDIRECT
+  ======================================================= */
 
-    if (!location) {
-      alert("Please select the issue location on the map.");
-      return;
-    }
-
-    setSubmitted(true);
-
+  const handleLoginRedirect = () => {
+    navigate("/login");
   };
 
 
-  return (
-    <div className="report-page">
+  /* =======================================================
+     PHOTO HANDLING
+  ======================================================= */
 
-      <div className="report-container">
+  const handlePhotoChange = (event) => {
+    const file = event.target.files?.[0];
 
-        {/* ================= HEADER ================= */}
+    if (!file) {
+      return;
+    }
+
+    setPhotoFile(file);
+
+    const previewUrl = URL.createObjectURL(file);
+
+    setPhoto(previewUrl);
+  };
+
+
+  const removePhoto = () => {
+    if (photo) {
+      URL.revokeObjectURL(photo);
+    }
+
+    setPhoto(null);
+    setPhotoFile(null);
+  };
+
+
+  /* =======================================================
+     CLEAN PHOTO URL
+  ======================================================= */
+
+  useEffect(() => {
+    return () => {
+      if (photo) {
+        URL.revokeObjectURL(photo);
+      }
+    };
+  }, [photo]);
+
+
+  /* =======================================================
+     SUBMIT ISSUE
+  ======================================================= */
+
+  const handleSubmit = async () => {
+
+    /* =====================================================
+       CHECK AUTHENTICATION
+    ===================================================== */
+
+    const token = localStorage.getItem(
+      "civicGuardianToken"
+    );
+
+    const userData = localStorage.getItem(
+      "civicGuardianUser"
+    );
+
+
+    if (!token || !userData) {
+
+      alert(
+        "Please login or register before reporting an issue."
+      );
+
+      navigate("/login");
+
+      return;
+    }
+
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if (!title.trim()) {
+
+      alert(
+        "Please enter issue title."
+      );
+
+      return;
+    }
+
+
+    if (!category) {
+
+      alert(
+        "Please select an issue category."
+      );
+
+      return;
+    }
+
+
+    if (!description.trim()) {
+
+      alert(
+        "Please describe the issue."
+      );
+
+      return;
+    }
+
+
+    if (!location) {
+
+      alert(
+        "Please select the issue location on the map."
+      );
+
+      return;
+    }
+
+
+    /* =====================================================
+       SEND REQUEST
+    ===================================================== */
+
+    try {
+
+      setLoading(true);
+
+      setSubmitted(false);
+
+
+      const response = await fetch(
+        "http://localhost:5000/api/issues",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            title: title.trim(),
+
+            category,
+
+            description: description.trim(),
+
+            location: {
+              lat: Number(location.lat),
+
+              lng: Number(location.lng),
+            },
+
+            priority,
+
+            /*
+
+              Photo is currently only previewed
+              on frontend.
+
+              If backend photo upload is added later,
+              we can send photoFile using FormData.
+
+            */
+
+          }),
+        }
+      );
+
+
+      /* ===================================================
+         RESPONSE
+      =================================================== */
+
+      const data = await response.json();
+
+
+      /* ===================================================
+         AUTHENTICATION ERROR
+      =================================================== */
+
+      if (
+        response.status === 401 ||
+        response.status === 403
+      ) {
+
+        localStorage.removeItem(
+          "civicGuardianToken"
+        );
+
+        localStorage.removeItem(
+          "civicGuardianUser"
+        );
+
+        setIsLoggedIn(false);
+
+        alert(
+          data.message ||
+          "Your login session has expired. Please login again."
+        );
+
+        navigate("/login");
+
+        return;
+      }
+
+
+      /* ===================================================
+         OTHER BACKEND ERROR
+      =================================================== */
+
+      if (!response.ok) {
+
+        alert(
+          data.message ||
+          "Failed to report issue."
+        );
+
+        return;
+      }
+
+
+      /* ===================================================
+         SUCCESS
+      =================================================== */
+
+      console.log(
+        "Issue created successfully:",
+        data
+      );
+
+
+      setSubmitted(true);
+
+
+      /* ===================================================
+         RESET FORM
+      =================================================== */
+
+      setTitle("");
+
+      setCategory("");
+
+      setDescription("");
+
+      setPriority("low");
+
+      setLocation(null);
+
+      removePhoto();
+
+
+    } catch (error) {
+
+      console.error(
+        "Error reporting issue:",
+        error
+      );
+
+      alert(
+        "Unable to connect to server. Please make sure the backend is running."
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
+
+  /* =========================================================
+     NOT LOGGED IN UI
+  ========================================================= */
+
+  if (!isLoggedIn) {
+
+    return (
+      <div className="report-page">
 
         <div className="report-header">
 
-          <Link to="/" className="back-link">
+          <Link
+            to="/"
+            className="back-link"
+          >
             ← Back to Home
           </Link>
 
-          <p className="section-label">
-            CITIZEN REPORT
-          </p>
+          <div className="section-label">
+            CIVIC REPORTING
+          </div>
 
           <h1>
             Report a Civic Issue
           </h1>
 
           <p>
-            Help your city identify and resolve problems faster.
+            Please login or register before reporting
+            a civic issue.
           </p>
 
         </div>
 
 
-        {/* ================= FORM CARD ================= */}
-
         <div className="report-card">
 
-          {/* Issue Title */}
+          <div className="login-required">
 
-          <div className="form-group">
-
-            <label>
-              Issue Title
-            </label>
-
-            <input
-              type="text"
-              placeholder="e.g. Large pothole near main road"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-
-          </div>
-
-
-          {/* Category */}
-
-          <div className="form-group">
-
-            <label>
-              Issue Category
-            </label>
-
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-
-              <option value="">
-                Select a category
-              </option>
-
-              <option value="roads">
-                Roads
-              </option>
-
-              <option value="sanitation">
-                Sanitation
-              </option>
-
-              <option value="electricity">
-                Electricity
-              </option>
-
-              <option value="water">
-                Water
-              </option>
-
-              <option value="public-property">
-                Public Property
-              </option>
-
-              <option value="drainage">
-                Drainage
-              </option>
-
-            </select>
-
-          </div>
-
-
-          {/* Description */}
-
-          <div className="form-group">
-
-            <label>
-              Description
-            </label>
-
-            <textarea
-              rows="5"
-              placeholder="Describe the issue in detail..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-
-          </div>
-
-
-          {/* ================= MAP ================= */}
-
-          <div className="form-group">
-
-            <label>
-              Issue Location
-            </label>
-
-            <div className="map-wrapper">
-
-              <MapContainer
-                center={[23.2599, 77.4126]}
-                zoom={13}
-                className="issue-map"
-              >
-
-                <TileLayer
-                  attribution="&copy; OpenStreetMap contributors"
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-
-                <LocationMarker
-                  setLocation={setLocation}
-                />
-
-                {location && (
-                  <Marker
-                    position={[
-                      location.lat,
-                      location.lng
-                    ]}
-                  />
-                )}
-
-              </MapContainer>
-
+            <div className="success-icon">
+              🔐
             </div>
 
+            <h2>
+              Login Required
+            </h2>
 
-            {/* Location Info */}
+            <p>
+              Only registered and logged-in citizens
+              can report civic issues.
+            </p>
 
-            {location ? (
+            <button
+              type="button"
+              className="submit-issue-btn"
+              onClick={handleLoginRedirect}
+            >
+              Login to Report Issue
+            </button>
 
-              <p className="location-text">
-                📍 Location selected:{" "}
-                {location.lat.toFixed(5)},{" "}
-                {location.lng.toFixed(5)}
-              </p>
+            <p>
+              Don't have an account?{" "}
+
+              <Link to="/register">
+                Register here
+              </Link>
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    );
+  }
+
+
+  /* =========================================================
+     LOGGED-IN USER UI
+  ========================================================= */
+
+  return (
+    <div className="report-page">
+
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
+      <div className="report-header">
+
+        <Link
+          to="/"
+          className="back-link"
+        >
+          ← Back to Home
+        </Link>
+
+
+        <div className="section-label">
+          CIVIC REPORTING
+        </div>
+
+
+        <h1>
+          Report a Civic Issue
+        </h1>
+
+
+        <p>
+          Help make your city better by reporting
+          civic issues.
+        </p>
+
+      </div>
+
+
+      {/* =====================================================
+          FORM CARD
+      ===================================================== */}
+
+      <div className="report-card">
+
+
+        {/* ===================================================
+            ISSUE TITLE
+        =================================================== */}
+
+        <div className="form-group">
+
+          <label>
+            Issue Title
+          </label>
+
+
+          <input
+            type="text"
+            placeholder="e.g. Large pothole on main road"
+            value={title}
+            onChange={(e) =>
+              setTitle(e.target.value)
+            }
+            disabled={loading}
+          />
+
+        </div>
+
+
+        {/* ===================================================
+            CATEGORY
+        =================================================== */}
+
+        <div className="form-group">
+
+          <label>
+            Issue Category
+          </label>
+
+
+          <select
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
+            disabled={loading}
+          >
+
+            <option value="">
+              Select category
+            </option>
+
+            <option value="Road">
+              Road & Potholes
+            </option>
+
+            <option value="Electricity">
+              Electricity
+            </option>
+
+            <option value="Water">
+              Water Supply
+            </option>
+
+            <option value="Garbage">
+              Garbage & Waste
+            </option>
+
+            <option value="Street Light">
+              Street Lights
+            </option>
+
+            <option value="Drainage">
+              Drainage
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+
+        {/* ===================================================
+            DESCRIPTION
+        =================================================== */}
+
+        <div className="form-group">
+
+          <label>
+            Description
+          </label>
+
+
+          <textarea
+            rows="5"
+            placeholder="Describe the issue in detail..."
+            value={description}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
+            disabled={loading}
+          />
+
+        </div>
+
+
+        {/* ===================================================
+            MAP
+        =================================================== */}
+
+        <div className="form-group">
+
+          <label>
+            Issue Location
+          </label>
+
+
+          <div className="map-wrapper">
+
+            <MapContainer
+              center={[
+                23.2599,
+                77.4126,
+              ]}
+              zoom={13}
+              className="issue-map"
+            >
+
+              <TileLayer
+                attribution="&copy; OpenStreetMap contributors"
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+
+              <LocationMarker
+                setLocation={setLocation}
+                disabled={loading}
+              />
+
+
+              {location && (
+
+                <Marker
+                  position={[
+                    location.lat,
+                    location.lng,
+                  ]}
+                />
+
+              )}
+
+            </MapContainer>
+
+          </div>
+
+
+          {/* LOCATION INFO */}
+
+          {location ? (
+
+            <p className="location-text">
+
+              📍 Location selected:{" "}
+
+              {location.lat.toFixed(5)}
+
+              {", "}
+
+              {location.lng.toFixed(5)}
+
+            </p>
+
+          ) : (
+
+            <p className="location-hint">
+
+              Click on the map to select the
+              issue location.
+
+            </p>
+
+          )}
+
+        </div>
+
+
+        {/* ===================================================
+            PHOTO EVIDENCE
+        =================================================== */}
+
+        <div className="form-group">
+
+          <label>
+            Photo Evidence
+          </label>
+
+
+          <div className="upload-box">
+
+            {!photo ? (
+
+              <>
+
+                <span className="upload-icon">
+                  📷
+                </span>
+
+
+                <p>
+                  Upload a photo of the issue
+                </p>
+
+
+                <label className="upload-btn">
+
+                  Choose Photo
+
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    disabled={loading}
+                    onChange={handlePhotoChange}
+                  />
+
+                </label>
+
+              </>
 
             ) : (
 
-              <p className="location-hint">
-                Click on the map to select the issue location.
-              </p>
+              <div className="photo-preview">
+
+                <img
+                  src={photo}
+                  alt="Issue preview"
+                />
+
+
+                <button
+                  type="button"
+                  className="remove-photo"
+                  onClick={removePhoto}
+                  disabled={loading}
+                >
+                  Remove Photo
+                </button>
+
+              </div>
 
             )}
 
           </div>
 
-
-          {/* ================= PHOTO ================= */}
-
-          <div className="form-group">
-
-            <label>
-              Photo Evidence
-            </label>
-
-            <div className="upload-box">
-
-              {!photo ? (
-
-                <>
-                  <span className="upload-icon">
-                    📷
-                  </span>
-
-                  <p>
-                    Upload a photo of the issue
-                  </p>
-
-                  <label className="upload-btn">
-
-                    Choose Photo
-
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) => {
-
-                        const file = e.target.files[0];
-
-                        if (file) {
-                          setPhoto(
-                            URL.createObjectURL(file)
-                          );
-                        }
-
-                      }}
-                    />
-
-                  </label>
-                </>
-
-              ) : (
-
-                <div className="photo-preview">
-
-                  <img
-                    src={photo}
-                    alt="Issue preview"
-                  />
-
-                  <button
-                    type="button"
-                    className="remove-photo"
-                    onClick={() => setPhoto(null)}
-                  >
-                    Remove Photo
-                  </button>
-
-                </div>
-
-              )}
-
-            </div>
-
-          </div>
+        </div>
 
 
-          {/* ================= PRIORITY ================= */}
+        {/* ===================================================
+            PRIORITY
+        =================================================== */}
 
-          <div className="form-group">
+        <div className="form-group">
 
-            <label>
-              Priority
-            </label>
-
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-            >
-
-              <option value="low">
-                Low
-              </option>
-
-              <option value="medium">
-                Medium
-              </option>
-
-              <option value="high">
-                High
-              </option>
-
-            </select>
-
-          </div>
+          <label>
+            Priority
+          </label>
 
 
-          {/* ================= SUBMIT ================= */}
-
-          <button
-            type="button"
-            className="submit-issue-btn"
-            onClick={handleSubmit}
+          <select
+            value={priority}
+            onChange={(e) =>
+              setPriority(e.target.value)
+            }
+            disabled={loading}
           >
-            Submit Issue
-          </button>
 
+            <option value="low">
+              Low
+            </option>
 
-          {/* ================= SUCCESS MESSAGE ================= */}
+            <option value="medium">
+              Medium
+            </option>
 
-          {submitted && (
+            <option value="high">
+              High
+            </option>
 
-            <div className="success-message">
-
-              <div className="success-icon">
-                ✓
-              </div>
-
-              <div>
-
-                <h3>
-                  Issue Reported Successfully!
-                </h3>
-
-                <p>
-                  Your civic issue has been submitted.
-                  You can track its progress from your dashboard.
-                </p>
-
-              </div>
-
-            </div>
-
-          )}
+          </select>
 
         </div>
+
+
+        {/* ===================================================
+            SUBMIT
+        =================================================== */}
+
+        <button
+          type="button"
+          className="submit-issue-btn"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+
+          {loading
+            ? "Submitting..."
+            : "Submit Issue"}
+
+        </button>
+
+
+        {/* ===================================================
+            SUCCESS MESSAGE
+        =================================================== */}
+
+        {submitted && (
+
+          <div className="success-message">
+
+            <div className="success-icon">
+              ✓
+            </div>
+
+
+            <div>
+
+              <h3>
+                Issue Reported Successfully!
+              </h3>
+
+
+              <p>
+                Your civic issue has been submitted.
+                You can track its progress from your
+                dashboard.
+              </p>
+
+
+              <Link to="/dashboard">
+                Go to Dashboard →
+              </Link>
+
+            </div>
+
+          </div>
+
+        )}
 
       </div>
 
