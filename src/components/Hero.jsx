@@ -1,15 +1,19 @@
+import { Link } from "react-router-dom";
 import heroImage from "../assets/hero.png";
 
 function Hero() {
   return (
     <section className="hero" id="home">
+
       {/* BACKGROUND DECORATION */}
       <div className="hero-bg-circle circle-one"></div>
       <div className="hero-bg-circle circle-two"></div>
 
       <div className="hero-container">
 
-        {/* LEFT CONTENT */}
+        {/* =========================
+            LEFT CONTENT
+        ========================= */}
         <div className="hero-content">
 
           <div className="hero-badge">
@@ -17,87 +21,87 @@ function Hero() {
             SMART CITY • CIVIC TECHNOLOGY
           </div>
 
-          <h1>
+          <h1 className="hero-title">
             Make Your City
-            <br />
             <span>Better.</span>
           </h1>
 
-          <p>
+          <p className="hero-description">
             Report civic issues, track their progress and help
             create a cleaner, safer and smarter city.
           </p>
 
-          <div className="hero-buttons">
+          {/* ACTION BUTTONS */}
+          <div className="hero-actions">
 
-            <button className="hero-primary-btn">
-              <span>Report an Issue</span>
-              <span className="hero-arrow">→</span>
-            </button>
+            <Link to="/report-issue" className="hero-primary">
+              Report an Issue
+              <span>→</span>
+            </Link>
 
-            <button className="hero-secondary-btn">
+            <a href="#issues" className="hero-secondary">
               Explore Issues
               <span>↗</span>
-            </button>
+            </a>
 
           </div>
 
           {/* TRUST SECTION */}
-          <div className="hero-trust">
+          <div className="hero-citizens">
 
-            <div className="trust-icons">
-              <div>👩</div>
-              <div>👨</div>
-              <div>👩</div>
-              <div>👨</div>
+            <div className="citizen-avatars">
+              <div className="citizen-avatar">👩</div>
+              <div className="citizen-avatar">👨</div>
+              <div className="citizen-avatar">👩</div>
+              <div className="citizen-avatar">👨</div>
             </div>
 
-            <div className="trust-text">
+            <div className="citizen-text">
               <strong>Built for citizens</strong>
-
-              <small>
-                Together we can improve our city
-              </small>
+              <span>Together we can improve our city</span>
             </div>
 
           </div>
 
         </div>
 
-        {/* RIGHT IMAGE */}
-        <div className="hero-image-wrapper">
+        {/* =========================
+            RIGHT VISUAL
+        ========================= */}
+        <div className="hero-visual">
 
-          <div className="hero-image-card">
+          <div className="hero-card">
 
             <img
               src={heroImage}
               alt="Citizens improving their city"
+              className="hero-main-image"
             />
 
           </div>
 
-          {/* RESOLVED ISSUE CARD */}
-          <div className="hero-floating-card floating-one">
+          {/* RESOLVED ISSUE */}
+          <div className="issue-card resolved">
 
-            <div className="floating-icon">
+            <div className="issue-icon">
               ✓
             </div>
 
-            <div className="floating-content">
+            <div className="issue-info">
               <strong>Issue Resolved</strong>
               <span>Street Light • Ward 8</span>
             </div>
 
           </div>
 
-          {/* NEW ISSUE CARD */}
-          <div className="hero-floating-card floating-two">
+          {/* NEW ISSUE */}
+          <div className="issue-card new-issue">
 
-            <div className="floating-icon blue-icon">
+            <div className="issue-icon">
               !
             </div>
 
-            <div className="floating-content">
+            <div className="issue-info">
               <strong>New Issue</strong>
               <span>Pothole • Ward 12</span>
             </div>

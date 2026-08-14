@@ -1,53 +1,56 @@
+import { Link } from "react-router-dom";
+
 function HomeSections() {
   return (
     <>
+      {/* =====================================================
+          STATS
+      ===================================================== */}
       <section className="stats-section">
         <div className="stats-container">
 
           <div className="stat-item">
-            <div className="stat-number">1,240+</div>
-            <div className="stat-label">Issues Reported</div>
+            <span className="stat-number">1,240+</span>
+            <span className="stat-label">Issues Reported</span>
           </div>
 
           <div className="stat-item">
-            <div className="stat-number">890+</div>
-            <div className="stat-label">Issues Resolved</div>
+            <span className="stat-number">890+</span>
+            <span className="stat-label">Issues Resolved</span>
           </div>
 
           <div className="stat-item">
-            <div className="stat-number">32</div>
-            <div className="stat-label">City Wards</div>
+            <span className="stat-number">32</span>
+            <span className="stat-label">City Wards</span>
           </div>
 
           <div className="stat-item">
-            <div className="stat-number">94%</div>
-            <div className="stat-label">Citizen Satisfaction</div>
+            <span className="stat-number">94%</span>
+            <span className="stat-label">Citizen Satisfaction</span>
           </div>
 
         </div>
       </section>
 
 
-      {/* =========================================
+      {/* =====================================================
           HOW IT WORKS
-      ========================================= */}
+      ===================================================== */}
+      <section className="how-section" id="how-it-works">
 
-      <section
-        className="how-section"
-        id="how-it-works"
-      >
+        <div className="how-container">
 
-        <div className="section-container">
+          <div className="section-header how-header">
 
-          <div className="section-heading">
+            <div className="section-eyebrow">
+              HOW IT WORKS
+            </div>
 
-            <span>HOW IT WORKS</span>
-
-            <h2>
-              Report. Track. <b>Resolve.</b>
+            <h2 className="section-title">
+              Report. Track. <span>Resolve.</span>
             </h2>
 
-            <p>
+            <p className="section-description">
               CivicGuardian connects citizens with city
               administrators to solve civic problems faster.
             </p>
@@ -57,16 +60,12 @@ function HomeSections() {
 
           <div className="steps-grid">
 
-            {/* STEP 01 */}
-
+            {/* STEP 1 */}
             <div className="step-card">
 
               <div className="step-top">
-                <span>01</span>
-
-                <div className="step-icon">
-                  📍
-                </div>
+                <span className="step-number">01</span>
+                <div className="step-icon">📸</div>
               </div>
 
               <h3>Report an Issue</h3>
@@ -76,23 +75,19 @@ function HomeSections() {
                 water leakage and other civic problems.
               </p>
 
-              <a href="#report">
+              <Link to="/report-issue" className="step-link">
                 Report now →
-              </a>
+              </Link>
 
             </div>
 
 
-            {/* STEP 02 */}
-
+            {/* STEP 2 */}
             <div className="step-card">
 
               <div className="step-top">
-                <span>02</span>
-
-                <div className="step-icon">
-                  🧭
-                </div>
+                <span className="step-number">02</span>
+                <div className="step-icon">🎯</div>
               </div>
 
               <h3>Smart Routing</h3>
@@ -102,23 +97,19 @@ function HomeSections() {
                 and routed to the responsible department.
               </p>
 
-              <a href="#how-it-works">
+              <span className="step-link">
                 Automated process →
-              </a>
+              </span>
 
             </div>
 
 
-            {/* STEP 03 */}
-
+            {/* STEP 3 */}
             <div className="step-card">
 
               <div className="step-top">
-                <span>03</span>
-
-                <div className="step-icon">
-                  📈
-                </div>
+                <span className="step-number">03</span>
+                <div className="step-icon">📊</div>
               </div>
 
               <h3>Track Progress</h3>
@@ -128,23 +119,19 @@ function HomeSections() {
                 resolution with complete transparency.
               </p>
 
-              <a href="#how-it-works">
+              <span className="step-link">
                 Real-time tracking →
-              </a>
+              </span>
 
             </div>
 
 
-            {/* STEP 04 */}
-
+            {/* STEP 4 */}
             <div className="step-card">
 
               <div className="step-top">
-                <span>04</span>
-
-                <div className="step-icon">
-                  🛡️
-                </div>
+                <span className="step-number">04</span>
+                <div className="step-icon">✓</div>
               </div>
 
               <h3>Verify Resolution</h3>
@@ -154,9 +141,9 @@ function HomeSections() {
                 issue has actually been resolved.
               </p>
 
-              <a href="#how-it-works">
+              <span className="step-link">
                 Citizen verified →
-              </a>
+              </span>
 
             </div>
 
@@ -167,23 +154,24 @@ function HomeSections() {
       </section>
 
 
-      {/* =========================================
+      {/* =====================================================
           CIVIC ISSUES
-      ========================================= */}
+      ===================================================== */}
+      <section className="issues-section" id="issues">
 
-      <section className="issues-section">
+        <div className="issues-container">
 
-        <div className="section-container">
+          <div className="section-header">
 
-          <div className="section-heading center">
+            <div className="section-eyebrow">
+              CIVIC ISSUES
+            </div>
 
-            <span>CIVIC ISSUES</span>
-
-            <h2>
-              What Can You <b>Report?</b>
+            <h2 className="section-title">
+              What Can You <span>Report?</span>
             </h2>
 
-            <p>
+            <p className="section-description">
               Help your city identify and resolve everyday
               problems affecting your community.
             </p>
@@ -193,9 +181,10 @@ function HomeSections() {
 
           <div className="issues-grid">
 
-            <div className="issue-card">
+            {/* ROADS */}
+            <div className="issue-category">
 
-              <div className="issue-icon">
+              <div className="category-icon">
                 🛣️
               </div>
 
@@ -205,16 +194,17 @@ function HomeSections() {
                 Damaged roads, potholes and unsafe streets.
               </p>
 
-              <a href="#report">
+              <Link to="/report-issue" className="category-link">
                 Report issue →
-              </a>
+              </Link>
 
             </div>
 
 
-            <div className="issue-card">
+            {/* WASTE */}
+            <div className="issue-category">
 
-              <div className="issue-icon green">
+              <div className="category-icon">
                 🗑️
               </div>
 
@@ -224,16 +214,17 @@ function HomeSections() {
                 Garbage collection and waste disposal problems.
               </p>
 
-              <a href="#report">
+              <Link to="/report-issue" className="category-link">
                 Report issue →
-              </a>
+              </Link>
 
             </div>
 
 
-            <div className="issue-card">
+            {/* STREET LIGHT */}
+            <div className="issue-category">
 
-              <div className="issue-icon yellow">
+              <div className="category-icon">
                 💡
               </div>
 
@@ -243,16 +234,17 @@ function HomeSections() {
                 Broken or non-functional street lights.
               </p>
 
-              <a href="#report">
+              <Link to="/report-issue" className="category-link">
                 Report issue →
-              </a>
+              </Link>
 
             </div>
 
 
-            <div className="issue-card">
+            {/* WATER */}
+            <div className="issue-category">
 
-              <div className="issue-icon purple">
+              <div className="category-icon">
                 💧
               </div>
 
@@ -262,9 +254,9 @@ function HomeSections() {
                 Water leakage, drainage and flooding issues.
               </p>
 
-              <a href="#report">
+              <Link to="/report-issue" className="category-link">
                 Report issue →
-              </a>
+              </Link>
 
             </div>
 
@@ -275,27 +267,24 @@ function HomeSections() {
       </section>
 
 
-      {/* =========================================
-          ABOUT
-      ========================================= */}
+      {/* =====================================================
+          WHY CIVICGUARDIAN
+      ===================================================== */}
+      <section className="why-section" id="about">
 
-      <section
-        className="about-section"
-        id="about"
-      >
+        <div className="why-container">
 
-        <div className="about-container">
+          {/* LEFT */}
+          <div className="why-content">
 
-          <div className="about-content">
-
-            <span className="section-label">
+            <div className="section-eyebrow">
               WHY CIVICGUARDIAN?
-            </span>
+            </div>
 
-            <h2>
+            <h2 className="section-title">
               Your voice can
               <br />
-              <b>change your city.</b>
+              <span>change your city.</span>
             </h2>
 
             <p>
@@ -306,44 +295,53 @@ function HomeSections() {
             </p>
 
 
-            <div className="about-points">
+            <div className="feature-list">
 
-              <div>
-                <span>✓</span>
+              <div className="feature-item">
+
+                <div className="feature-check">
+                  ✓
+                </div>
 
                 <div>
                   <strong>Easy Reporting</strong>
-
-                  <small>
+                  <span>
                     Report problems in just a few clicks.
-                  </small>
+                  </span>
                 </div>
+
               </div>
 
 
-              <div>
-                <span>✓</span>
+              <div className="feature-item">
+
+                <div className="feature-check">
+                  ✓
+                </div>
 
                 <div>
                   <strong>Complete Transparency</strong>
-
-                  <small>
+                  <span>
                     Know what happens to your complaint.
-                  </small>
+                  </span>
                 </div>
+
               </div>
 
 
-              <div>
-                <span>✓</span>
+              <div className="feature-item">
+
+                <div className="feature-check">
+                  ✓
+                </div>
 
                 <div>
                   <strong>Citizen Verification</strong>
-
-                  <small>
+                  <span>
                     Citizens help confirm successful resolutions.
-                  </small>
+                  </span>
                 </div>
+
               </div>
 
             </div>
@@ -351,80 +349,86 @@ function HomeSections() {
           </div>
 
 
-          {/* Dashboard visual */}
+          {/* RIGHT - STATUS CARD */}
+          <div className="status-card">
 
-          <div className="dashboard">
-
-            <div className="dashboard-header">
+            <div className="status-header">
 
               <div>
-                <small>REPORT STATUS</small>
+                <div className="status-title">
+                  REPORT STATUS
+                </div>
 
-                <h3>
+                <div className="status-name">
                   Street Light Issue
-                </h3>
+                </div>
               </div>
 
-              <span>
+              <div className="status-badge">
                 Resolved
-              </span>
-
-            </div>
-
-
-            <div className="progress">
-
-              <div className="progress-item done">
-                <span>✓</span>
-                <div></div>
-              </div>
-
-              <div className="progress-item done">
-                <span>✓</span>
-                <div></div>
-              </div>
-
-              <div className="progress-item done">
-                <span>✓</span>
-                <div></div>
-              </div>
-
-              <div className="progress-item done">
-                <span>✓</span>
               </div>
 
             </div>
 
 
-            <div className="progress-labels">
+            <div className="status-progress">
 
-              <span>Reported</span>
+              <div className="status-step">
 
-              <span>Assigned</span>
+                <div className="status-dot">
+                  ✓
+                </div>
 
-              <span>In Progress</span>
+                <span>Reported</span>
 
-              <span>Resolved</span>
+              </div>
+
+
+              <div className="status-step">
+
+                <div className="status-dot">
+                  ✓
+                </div>
+
+                <span>Assigned</span>
+
+              </div>
+
+
+              <div className="status-step">
+
+                <div className="status-dot">
+                  ✓
+                </div>
+
+                <span>In Progress</span>
+
+              </div>
+
+
+              <div className="status-step">
+
+                <div className="status-dot">
+                  ✓
+                </div>
+
+                <span>Resolved</span>
+
+              </div>
 
             </div>
 
 
-            <div className="dashboard-info">
+            <div className="status-details">
 
-              <div>
-                <small>Reported</small>
-
-                <strong>
-                  12 Aug 2026
-                </strong>
+              <div className="status-detail">
+                <span>Reported</span>
+                <strong>12 Aug 2026</strong>
               </div>
 
-              <div>
-                <small>Department</small>
-
-                <strong>
-                  Municipal Services
-                </strong>
+              <div className="status-detail">
+                <span>Department</span>
+                <strong>Municipal Services</strong>
               </div>
 
             </div>
@@ -436,30 +440,25 @@ function HomeSections() {
       </section>
 
 
-      {/* =========================================
+      {/* =====================================================
           CTA
-      ========================================= */}
-
-      <section
-        className="cta-section"
-        id="report"
-      >
+      ===================================================== */}
+      <section className="cta-section" id="report">
 
         <div className="cta-container">
 
-          <div>
+          <div className="cta-content">
 
-            <span>
+            <div className="cta-eyebrow">
               BUILD A BETTER CITY
-            </span>
+            </div>
 
-            <h2>
+            <h2 className="cta-title">
               See a problem?
-              <br />
-              <b>Report it.</b>
+              <span>Report it.</span>
             </h2>
 
-            <p>
+            <p className="cta-description">
               Your small action can make a big difference
               in your community.
             </p>
@@ -467,119 +466,121 @@ function HomeSections() {
           </div>
 
 
-          <button className="cta-button">
-
+          <Link to="/report-issue" className="primary-btn">
             Report an Issue
-
             <span>→</span>
-
-          </button>
+          </Link>
 
         </div>
 
       </section>
 
 
-      {/* =========================================
+      {/* =====================================================
           FOOTER
-      ========================================= */}
-
+      ===================================================== */}
       <footer className="footer">
 
         <div className="footer-container">
 
-          <div className="footer-brand">
+          <div className="footer-grid">
 
-            <div className="footer-logo">
+            {/* BRAND */}
+            <div className="footer-brand">
 
-              <span>✦</span>
+              <div className="footer-logo">
 
-              Civic<span>Guardian</span>
+                <div className="footer-logo-icon">
+                  ✦
+                </div>
+
+                <span>
+                  Civic<span>Guardian</span>
+                </span>
+
+              </div>
+
+              <p>
+                Empowering citizens to build cleaner,
+                safer and smarter cities.
+              </p>
 
             </div>
 
-            <p>
-              Empowering citizens to build cleaner,
-              safer and smarter cities.
-            </p>
+
+            {/* PLATFORM */}
+            <div className="footer-column">
+
+              <h4>Platform</h4>
+
+              <Link to="/report-issue">
+                Report an Issue
+              </Link>
+
+              <a href="#how-it-works">
+                How It Works
+              </a>
+
+              <a href="#issues">
+                Civic Issues
+              </a>
+
+            </div>
+
+
+            {/* COMPANY */}
+            <div className="footer-column">
+
+              <h4>Company</h4>
+
+              <a href="#about">
+                About
+              </a>
+
+              <a href="#about">
+                Contact
+              </a>
+
+              <a href="#about">
+                Privacy
+              </a>
+
+            </div>
+
+
+            {/* FOR CITIES */}
+            <div className="footer-column">
+
+              <h4>For Cities</h4>
+
+              <a href="#about">
+                City Dashboard
+              </a>
+
+              <a href="#about">
+                Administration
+              </a>
+
+              <a href="#about">
+                Partners
+              </a>
+
+            </div>
 
           </div>
 
 
-          <div className="footer-column">
+          <div className="footer-bottom">
 
-            <h4>
-              Platform
-            </h4>
+            <span>
+              © 2026 CivicGuardian. All rights reserved.
+            </span>
 
-            <a href="#report">
-              Report an Issue
-            </a>
-
-            <a href="#how-it-works">
-              How It Works
-            </a>
-
-            <a href="#home">
-              Track Issues
-            </a>
+            <span>
+              Smart City • Civic Technology
+            </span>
 
           </div>
-
-
-          <div className="footer-column">
-
-            <h4>
-              Company
-            </h4>
-
-            <a href="#about">
-              About
-            </a>
-
-            <a href="#about">
-              Contact
-            </a>
-
-            <a href="#about">
-              Privacy
-            </a>
-
-          </div>
-
-
-          <div className="footer-column">
-
-            <h4>
-              For Cities
-            </h4>
-
-            <a href="#about">
-              City Dashboard
-            </a>
-
-            <a href="#about">
-              Administration
-            </a>
-
-            <a href="#about">
-              Partners
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <div className="footer-bottom">
-
-          <span>
-            © 2026 CivicGuardian. All rights reserved.
-          </span>
-
-          <span>
-            Smart City • Civic Technology
-          </span>
 
         </div>
 

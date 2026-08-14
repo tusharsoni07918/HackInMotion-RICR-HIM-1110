@@ -1,4 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -7,6 +11,8 @@ import HomeSections from "./components/HomeSections";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ReportIssue from "./pages/ReportIssue";
+import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -25,26 +31,18 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-
       <Routes>
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/register"
-          element={<Register />}
-        />
+        <Route path="/register" element={<Register />} />
 
+        {/* Protected Citizen Route */}
         <Route
-          path="/report-issue"
+          path="/report"
           element={
             <ProtectedRoute>
               <ReportIssue />
@@ -52,8 +50,26 @@ function App() {
           }
         />
 
-      </Routes>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
+        {/* Protected Admin Route */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
     </BrowserRouter>
   );
 }

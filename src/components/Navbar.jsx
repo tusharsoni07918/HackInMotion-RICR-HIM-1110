@@ -1,30 +1,24 @@
 import { Link } from "react-router-dom";
-
 import "./Navbar.css";
 
 function Navbar() {
   return (
     <header className="navbar">
-
       <div className="navbar-inner">
 
         {/* LOGO */}
         <Link to="/" className="navbar-logo">
-
           <div className="logo-box">
             <span>✦</span>
           </div>
 
-          <span className="logo-text">
+          <div className="logo-text">
             Civic<span>Guardian</span>
-          </span>
-
+          </div>
         </Link>
-
 
         {/* NAVIGATION */}
         <nav className="navbar-links">
-
           <Link to="/" className="nav-link active">
             Home
           </Link>
@@ -36,35 +30,32 @@ function Navbar() {
           <a href="#about" className="nav-link">
             About
           </a>
-
         </nav>
 
-
-        {/* RIGHT SIDE */}
+        {/* RIGHT ACTIONS */}
         <div className="navbar-actions">
 
-          {/* LOGIN */}
-          <Link
-            to="/login"
-            className="login-btn"
-          >
+          <Link to="/login" className="login-btn">
             Login
           </Link>
 
-
-          {/* REPORT ISSUE */}
-          <Link
-            to="/login"
-            className="report-btn"
-          >
+          <Link to="/report-issue" className="report-btn">
             Report an Issue
-            <span>→</span>
+            <span className="report-arrow">→</span>
           </Link>
 
         </div>
 
-      </div>
+        {/* MOBILE MENU */}
+        <button
+          type="button"
+          className="mobile-menu"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
 
+      </div>
     </header>
   );
 }
