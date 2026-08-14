@@ -1,61 +1,66 @@
 import { Link } from "react-router-dom";
+
 import "./Navbar.css";
 
 function Navbar() {
   return (
     <header className="navbar">
+
       <div className="navbar-inner">
 
         {/* LOGO */}
-        <Link to="/" className="navbar-logo">
+        <a href="#home" className="navbar-logo">
+
           <div className="logo-box">
             <span>✦</span>
           </div>
 
-          <div className="logo-text">
+          <span className="logo-text">
             Civic<span>Guardian</span>
-          </div>
-        </Link>
+          </span>
+
+        </a>
+
 
         {/* NAVIGATION */}
         <nav className="navbar-links">
-          <Link to="/" className="nav-link active">
-            Home
-          </Link>
 
-          <a href="#how-it-works" className="nav-link">
-            How It Works
-          </a>
+  <a href="#home" className="nav-link">
+    Home
+  </a>
 
-          <a href="#about" className="nav-link">
-            About
-          </a>
-        </nav>
+  <a href="#how-it-works" className="nav-link">
+    How It Works
+  </a>
 
-        {/* RIGHT ACTIONS */}
+  <a href="#about" className="nav-link">
+    About
+  </a>
+
+</nav>
+
+
+        {/* RIGHT SIDE */}
         <div className="navbar-actions">
 
           <Link to="/login" className="login-btn">
             Login
           </Link>
 
+          {/* Report Issue */}
           <Link to="/report-issue" className="report-btn">
             Report an Issue
-            <span className="report-arrow">→</span>
+            <span>→</span>
           </Link>
 
         </div>
 
-        {/* MOBILE MENU */}
-        <button
-          type="button"
-          className="mobile-menu"
-          aria-label="Open menu"
-        >
-          ☰
-        </button>
+
+        
+      
 
       </div>
+
     </header>
   );
 }
