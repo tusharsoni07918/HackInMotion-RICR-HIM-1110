@@ -59,7 +59,10 @@ function Register() {
 
       navigate("/login");
     } catch (error) {
-      setError(error.message || "Registration failed.");
+      setError(
+        error.message ||
+          "Unable to create account. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -157,7 +160,9 @@ function Register() {
               type="password"
               placeholder="Confirm your password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) =>
+                setConfirmPassword(e.target.value)
+              }
               autoComplete="new-password"
               required
             />
@@ -182,7 +187,9 @@ function Register() {
             className="auth-btn"
             disabled={loading}
           >
-            {loading ? "Creating Account..." : "Create Account"}
+            {loading
+              ? "Creating Account..."
+              : "Create Account"}
 
             {!loading && (
               <span>
