@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import { getIssues } from "../api/issues";
+
 import "./Dashboard.css";
 
 function Dashboard() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  /* ================= FETCH ISSUES ================= */
 
   const fetchIssues = async () => {
     try {
@@ -17,8 +21,14 @@ function Dashboard() {
 
       setIssues(data.issues || []);
     } catch (err) {
-      console.error("Failed to fetch issues:", err);
-      setError("Unable to load reported issues.");
+      console.error(
+        "Failed to fetch issues:",
+        err
+      );
+
+      setError(
+        "Unable to load reported issues."
+      );
     } finally {
       setLoading(false);
     }
@@ -28,29 +38,30 @@ function Dashboard() {
     fetchIssues();
   }, []);
 
-  /* =========================
-     STATISTICS
-  ========================= */
+  /* ================= STATISTICS ================= */
 
   const totalIssues = issues.length;
 
   const reportedIssues = issues.filter(
-    (issue) => issue.status === "Reported"
+    (issue) =>
+      issue.status === "pending" ||
+      issue.status === "Reported"
   ).length;
 
   const inProgressIssues = issues.filter(
     (issue) =>
+      issue.status === "in-progress" ||
       issue.status === "Assigned" ||
       issue.status === "In Progress"
   ).length;
 
   const resolvedIssues = issues.filter(
-    (issue) => issue.status === "Resolved"
+    (issue) =>
+      issue.status === "resolved" ||
+      issue.status === "Resolved"
   ).length;
 
-  /* =========================
-     STATUS CLASS
-  ========================= */
+  /* ================= STATUS CLASS ================= */
 
   const getStatusClass = (status) => {
     switch (status) {
@@ -60,7 +71,13 @@ function Dashboard() {
       case "In Progress":
         return "status-progress";
 
+      case "in-progress":
+        return "status-progress";
+
       case "Resolved":
+        return "status-resolved";
+
+      case "resolved":
         return "status-resolved";
 
       default:
@@ -68,26 +85,25 @@ function Dashboard() {
     }
   };
 
-  /* =========================
-     FORMAT DATE
-  ========================= */
+  /* ================= FORMAT DATE ================= */
 
   const formatDate = (date) => {
     if (!date) return "";
 
-    return new Date(date).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+    return new Date(date).toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
   };
 
   return (
     <div className="dashboard-page">
 
-      {/* =========================
-          HEADER
-      ========================= */}
+      {/* ================= HEADER ================= */}
 
       <header className="dashboard-header">
 
@@ -123,10 +139,7 @@ function Dashboard() {
 
       </header>
 
-
-      {/* =========================
-          STATISTICS
-      ========================= */}
+      {/* ================= STATISTICS ================= */}
 
       <section className="dashboard-stats">
 
@@ -137,6 +150,7 @@ function Dashboard() {
           </div>
 
           <div>
+
             <span className="stat-label">
               Total Issues
             </span>
@@ -144,10 +158,10 @@ function Dashboard() {
             <strong>
               {totalIssues}
             </strong>
+
           </div>
 
         </div>
-
 
         <div className="stat-card">
 
@@ -156,6 +170,7 @@ function Dashboard() {
           </div>
 
           <div>
+
             <span className="stat-label">
               Reported
             </span>
@@ -163,10 +178,10 @@ function Dashboard() {
             <strong>
               {reportedIssues}
             </strong>
+
           </div>
 
         </div>
-
 
         <div className="stat-card">
 
@@ -175,6 +190,7 @@ function Dashboard() {
           </div>
 
           <div>
+
             <span className="stat-label">
               In Progress
             </span>
@@ -182,10 +198,10 @@ function Dashboard() {
             <strong>
               {inProgressIssues}
             </strong>
+
           </div>
 
         </div>
-
 
         <div className="stat-card">
 
@@ -194,6 +210,7 @@ function Dashboard() {
           </div>
 
           <div>
+
             <span className="stat-label">
               Resolved
             </span>
@@ -201,16 +218,14 @@ function Dashboard() {
             <strong>
               {resolvedIssues}
             </strong>
+
           </div>
 
         </div>
 
       </section>
 
-
-      {/* =========================
-          ISSUES SECTION
-      ========================= */}
+      {/* ================= ISSUES SECTION ================= */}
 
       <section className="issues-section">
 
@@ -233,15 +248,14 @@ function Dashboard() {
             onClick={fetchIssues}
             disabled={loading}
           >
-            {loading ? "Loading..." : "↻ Refresh"}
+            {loading
+              ? "Loading..."
+              : "↻ Refresh"}
           </button>
 
         </div>
 
-
-        {/* =========================
-            LOADING
-        ========================= */}
+        {/* ================= LOADING ================= */}
 
         {loading && (
           <div className="dashboard-message">
@@ -249,10 +263,7 @@ function Dashboard() {
           </div>
         )}
 
-
-        {/* =========================
-            ERROR
-        ========================= */}
+        {/* ================= ERROR ================= */}
 
         {!loading && error && (
           <div className="dashboard-message error">
@@ -260,123 +271,133 @@ function Dashboard() {
           </div>
         )}
 
+        {/* ================= EMPTY ================= */}
 
-        {/* =========================
-            EMPTY STATE
-        ========================= */}
+        {!loading &&
+          !error &&
+          issues.length === 0 && (
 
-        {!loading && !error && issues.length === 0 && (
+            <div className="empty-issues">
 
-          <div className="empty-issues">
+              <div className="empty-icon">
+                📋
+              </div>
 
-            <div className="empty-icon">
-              📋
-            </div>
+              <h3>
+                No issues reported yet
+              </h3>
 
-            <h3>
-              No issues reported yet
-            </h3>
+              <p>
+                Be the first citizen to report a civic issue
+                in your area.
+              </p>
 
-            <p>
-              Be the first citizen to report a civic issue
-              in your area.
-            </p>
-
-            <Link
-              to="/report-issue"
-              className="empty-report-btn"
-            >
-              Report an Issue
-            </Link>
-
-          </div>
-
-        )}
-
-
-        {/* =========================
-            ISSUE CARDS
-        ========================= */}
-
-        {!loading && !error && issues.length > 0 && (
-
-          <div className="issues-grid">
-
-            {issues.map((issue) => (
-
-              <article
-                className="issue-card"
-                key={issue._id}
+              <Link
+                to="/report-issue"
+                className="empty-report-btn"
               >
+                Report an Issue
+              </Link>
 
-                {/* CARD TOP */}
+            </div>
+          )}
 
-                <div className="issue-card-top">
+        {/* ================= ISSUE CARDS ================= */}
 
-                  <span className="issue-category">
-                    {issue.category}
-                  </span>
+        {!loading &&
+          !error &&
+          issues.length > 0 && (
 
-                  <span
-                    className={`issue-priority priority-${issue.priority}`}
-                  >
-                    {issue.priority}
-                  </span>
+            <div className="issues-grid">
 
-                </div>
+              {issues.map((issue) => (
 
+                <article
+                  className="issue-card"
+                  key={issue._id}
+                >
 
-                {/* TITLE */}
+                  {/* CARD TOP */}
 
-                <h3>
-                  {issue.title}
-                </h3>
+                  <div className="issue-card-top">
 
+                    <span className="issue-category">
+                      {issue.category}
+                    </span>
 
-                {/* DESCRIPTION */}
+                    <span
+                      className={`issue-priority priority-${issue.priority}`}
+                    >
+                      {issue.priority}
+                    </span>
 
-                <p className="issue-description">
-                  {issue.description}
-                </p>
-
-
-                {/* LOCATION */}
-
-                {issue.location && (
-                  <div className="issue-location">
-                    📍{" "}
-                    {Number(issue.location.lat).toFixed(5)}
-                    {", "}
-                    {Number(issue.location.lng).toFixed(5)}
                   </div>
-                )}
 
+                  {/* TITLE */}
 
-                {/* CARD BOTTOM */}
+                  <h3>
+                    {issue.title}
+                  </h3>
 
-                <div className="issue-card-bottom">
+                  {/* PHOTO */}
 
-                  <span
-                    className={`issue-status ${getStatusClass(
-                      issue.status
-                    )}`}
-                  >
-                    {issue.status}
-                  </span>
+                  {issue.photo && (
+                    <img
+                      src={issue.photo}
+                      alt={issue.title}
+                      className="issue-image"
+                    />
+                  )}
 
-                  <span className="issue-date">
-                    {formatDate(issue.createdAt)}
-                  </span>
+                  {/* DESCRIPTION */}
 
-                </div>
+                  <p className="issue-description">
+                    {issue.description}
+                  </p>
 
-              </article>
+                  {/* LOCATION */}
 
-            ))}
+                  {issue.location && (
+                    <div className="issue-location">
+                      📍{" "}
+                      {Number(
+                        issue.location.lat
+                      ).toFixed(5)}
 
-          </div>
+                      {", "}
 
-        )}
+                      {Number(
+                        issue.location.lng
+                      ).toFixed(5)}
+                    </div>
+                  )}
+
+                  {/* CARD BOTTOM */}
+
+                  <div className="issue-card-bottom">
+
+                    <span
+                      className={`issue-status ${getStatusClass(
+                        issue.status
+                      )}`}
+                    >
+                      {issue.status}
+                    </span>
+
+                    <span className="issue-date">
+                      {formatDate(
+                        issue.createdAt
+                      )}
+                    </span>
+
+                  </div>
+
+                </article>
+
+              ))}
+
+            </div>
+          )}
 
       </section>
 

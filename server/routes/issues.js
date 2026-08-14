@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
       description,
       location,
       priority,
-      photo,
+      photo: photo || "",
     });
 
     res.status(201).json({
@@ -41,6 +41,11 @@ router.post("/", async (req, res) => {
       issue,
     });
   } catch (error) {
+    console.error(
+      "Failed to report issue:",
+      error
+    );
+
     res.status(500).json({
       message: "Failed to report issue",
       error: error.message,
