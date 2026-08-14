@@ -1,22 +1,17 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import HomeSections from "./components/HomeSections";
+import Navbar from "./components/Navbar";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ReportIssue from "./pages/ReportIssue";
-import Dashboard from "./pages/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-
-import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./App.css";
+
+
+/* ================= HOME PAGE ================= */
 
 function Home() {
   return (
@@ -28,45 +23,27 @@ function Home() {
   );
 }
 
+
+/* ================= APP ================= */
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Public Routes */}
+        {/* Home Page */}
         <Route path="/" element={<Home />} />
 
+        {/* Login Page */}
         <Route path="/login" element={<Login />} />
 
+        {/* Register Page */}
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Citizen Route */}
+        {/* Report Issue Form */}
         <Route
-          path="/report"
-          element={
-            <ProtectedRoute>
-              <ReportIssue />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Protected Admin Route */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
+          path="/report-issue"
+          element={<ReportIssue />}
         />
 
       </Routes>
