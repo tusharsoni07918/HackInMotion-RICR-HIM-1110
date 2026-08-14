@@ -1380,46 +1380,135 @@ img {
   font-size: 12px;
 }
 
-.cta-button {
-  min-height: 48px;
+/* =====================
+   CTA BUTTON
+===================== */
 
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  min-height: 48px;
   padding: 0 21px;
 
-  display: flex;
-
+  display: inline-flex;
   align-items: center;
-
   justify-content: center;
-
   gap: 9px;
 
   border: none;
-
   border-radius: 9px;
 
   background: var(--primary);
-
   color: var(--white);
 
   font-size: 12px;
-
   font-weight: 700;
 
   white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
 
-  transition: 0.2s ease;
+  box-shadow:
+    0 6px 15px rgba(21, 128, 61, 0.20);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
+
+
+/* =====================
+   SHINE EFFECT
+===================== */
+
+.cta-button::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: -100%;
+
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.5s ease;
+
+  z-index: 1;
+}
+
+
+/* =====================
+   BUTTON CONTENT
+===================== */
+
+.cta-button span {
+  position: relative;
+  z-index: 2;
+
+  display: inline-block;
+
+  font-size: 17px;
+
+  transition: transform 0.25s ease;
+}
+
+
+/* =====================
+   HOVER EFFECT
+===================== */
 
 .cta-button:hover {
   background: var(--primary-dark);
 
-  transform: translateY(-2px);
+  color: var(--white);
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(21, 128, 61, 0.28);
 }
 
-.cta-button span {
-  font-size: 17px;
+
+/* =====================
+   SHINE ANIMATION
+===================== */
+
+.cta-button:hover::before {
+  left: 150%;
 }
 
+
+/* =====================
+   ARROW MOVEMENT
+===================== */
+
+.cta-button:hover span {
+  transform: translateX(4px);
+}
+
+
+/* =====================
+   CLICK EFFECT
+===================== */
+
+.cta-button:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 4px 10px rgba(21, 128, 61, 0.20);
+}
 
 /* =========================================================
    FOOTER

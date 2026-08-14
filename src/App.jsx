@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-
-import ReportIssue from "./pages/ReportIssue";
-
-import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import HomeSections from "./components/HomeSections";
+import Navbar from "./components/Navbar";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ReportIssue from "./pages/ReportIssue";
 
 import "./App.css";
+
+
+/* ================= HOME PAGE ================= */
 
 function Home() {
   return (
@@ -22,15 +23,30 @@ function Home() {
   );
 }
 
+
+/* ================= APP ================= */
+
 function App() {
   return (
     <BrowserRouter>
-     <Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/register" element={<Register />} />
-  <Route path="/report-issue" element={<ReportIssue />} />
-</Routes>
+      <Routes>
+
+        {/* Home Page */}
+        <Route path="/" element={<Home />} />
+
+        {/* Login Page */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Register Page */}
+        <Route path="/register" element={<Register />} />
+
+        {/* Report Issue Form */}
+        <Route
+          path="/report-issue"
+          element={<ReportIssue />}
+        />
+
+      </Routes>
     </BrowserRouter>
   );
 }

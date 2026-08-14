@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  useMapEvents,
+    MapContainer,
+    Marker,
+    TileLayer,
+    useMapEvents,
 } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
@@ -33,14 +33,20 @@ function ReportIssue() {
   /* ================= STATES ================= */
 
   const [location, setLocation] = useState(null);
+
   const [photo, setPhoto] = useState(null);
 
   const [title, setTitle] = useState("");
+
   const [category, setCategory] = useState("");
+
   const [description, setDescription] = useState("");
+
   const [priority, setPriority] = useState("low");
 
   const [submitted, setSubmitted] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
 
   /* ================= SUBMIT ================= */
@@ -67,7 +73,13 @@ function ReportIssue() {
       return;
     }
 
-    setSubmitted(true);
+    setLoading(true);
+
+    // Demo loading effect
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+    }, 800);
 
   };
 
@@ -104,7 +116,7 @@ function ReportIssue() {
 
         <div className="report-card">
 
-          {/* Issue Title */}
+          {/* ================= ISSUE TITLE ================= */}
 
           <div className="form-group">
 
@@ -122,7 +134,7 @@ function ReportIssue() {
           </div>
 
 
-          {/* Category */}
+          {/* ================= CATEGORY ================= */}
 
           <div className="form-group">
 
@@ -168,7 +180,7 @@ function ReportIssue() {
           </div>
 
 
-          {/* Description */}
+          {/* ================= DESCRIPTION ================= */}
 
           <div className="form-group">
 
@@ -180,8 +192,10 @@ function ReportIssue() {
               rows="5"
               placeholder="Describe the issue in detail..."
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+              onChange={(e) =>
+                setDescription(e.target.value)
+              }
+            />
 
           </div>
 
@@ -212,12 +226,14 @@ function ReportIssue() {
                 />
 
                 {location && (
+
                   <Marker
                     position={[
                       location.lat,
-                      location.lng
+                      location.lng,
                     ]}
                   />
+
                 )}
 
               </MapContainer>
@@ -225,7 +241,7 @@ function ReportIssue() {
             </div>
 
 
-            {/* Location Info */}
+            {/* ================= LOCATION INFO ================= */}
 
             {location ? (
 
@@ -259,6 +275,7 @@ function ReportIssue() {
               {!photo ? (
 
                 <>
+
                   <span className="upload-icon">
                     📷
                   </span>
@@ -280,15 +297,18 @@ function ReportIssue() {
                         const file = e.target.files[0];
 
                         if (file) {
+
                           setPhoto(
                             URL.createObjectURL(file)
                           );
+
                         }
 
                       }}
                     />
 
                   </label>
+
                 </>
 
               ) : (
@@ -327,7 +347,9 @@ function ReportIssue() {
 
             <select
               value={priority}
-              onChange={(e) => setPriority(e.target.value)}
+              onChange={(e) =>
+                setPriority(e.target.value)
+              }
             >
 
               <option value="low">
@@ -353,8 +375,14 @@ function ReportIssue() {
             type="button"
             className="submit-issue-btn"
             onClick={handleSubmit}
+            disabled={loading}
           >
-            Submit Issue
+
+            {loading
+              ? "Submitting..."
+              : "Submit Issue"
+            }
+
           </button>
 
 
