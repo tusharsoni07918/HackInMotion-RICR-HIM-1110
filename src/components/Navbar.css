@@ -1,13 +1,8 @@
-/* =====================
-   NAVBAR
-===================== */
-
 .navbar {
   width: 100%;
   height: 76px;
-  background: #fff;
-  border-bottom: 1px solid #DDE5DE;
-
+  background: #ffffff;
+  border-bottom: 1px solid #dde5de;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -18,11 +13,9 @@
   max-width: 1380px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 34px;
-
+  padding: 0 45px;
   display: flex;
   align-items: center;
-  box-sizing: border-box;
 }
 
 
@@ -34,33 +27,31 @@
   display: flex;
   align-items: center;
   gap: 11px;
-  flex-shrink: 0;
+  text-decoration: none;
 }
 
 .logo-box {
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 10px;
-  background: #17251D;
-  color: #84CC16;
+  background: #17251d;
+  color: #84cc16;
+  font-size: 19px;
+  box-shadow: 0 5px 15px rgba(23, 37, 29, 0.16);
 }
 
 .logo-text {
-  color: #17251D;
+  color: #17251d;
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.6px;
-  white-space: nowrap;
 }
 
 .logo-text span {
-  color: #15803D;
+  color: #15803d;
 }
 
 
@@ -71,68 +62,53 @@
 .navbar-links {
   display: flex;
   align-items: center;
-  justify-content: center;
-
   gap: 36px;
-
   margin-left: auto;
-  margin-right: 32px;
-
+  margin-right: 45px;
   height: 100%;
-  flex-shrink: 0;
 }
 
 .nav-link {
   position: relative;
-
   height: 100%;
-  min-width: max-content;
-
   display: flex;
   align-items: center;
-
-  color: #64748B;
-
+  color: #64748b;
   font-size: 14px;
   font-weight: 500;
-
   text-decoration: none;
-  white-space: nowrap;
-
-  cursor: pointer;
-
-  transition: color 0.2s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.nav-link:hover {
-  color: #15803D;
-}
 
-.nav-link.active {
-  color: #17251D;
-  font-weight: 700;
-}
+/* Underline initially hidden */
 
 .nav-link::after {
   content: "";
-
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   bottom: 0;
 
+  width: 0;
   height: 3px;
+
   border-radius: 5px 5px 0 0;
+  background: #15803d;
 
-  background: #15803D;
-
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
+  transition: width 0.25s ease, left 0.25s ease;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-  transform: scaleX(1);
+
+/* Same hover effect for ALL links */
+
+.nav-link:hover {
+  color: #15803d;
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
 }
 
 
@@ -143,14 +119,145 @@
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
-
-  flex-shrink: 0;
+  gap: 10px;
 }
 
-.login-btn,
-.report-btn {
+
+/* LOGIN BUTTON */
+
+.login-btn {
   height: 40px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border: 1px solid #cbd5d0;
+  border-radius: 8px;
+
+  color: #17251d;
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.login-btn:hover {
+  border-color: #15803d;
+  color: #15803d;
+  background: #f3f8f4;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(21, 128, 61, 0.12);
+}
+
+
+/* =====================
+   REPORT ISSUE BUTTON
+===================== */
+
+.report-btn {
+  position: relative;
+  overflow: hidden;
+
+  height: 40px;
+  padding: 0 19px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #15803d;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  box-shadow: 0 6px 15px rgba(21, 128, 61, 0.2);
+
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+
+/* Shine effect */
+
+.report-btn::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: -100%;
+
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+
+/* Keep text above shine */
+
+.report-btn span,
+.report-btn {
+  z-index: 1;
+}
+
+.report-btn span {
+  transition: transform 0.25s ease;
+}
+
+
+/* Hover effect */
+
+.report-btn:hover {
+  background: #166534;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(21, 128, 61, 0.28);
+}
+
+
+/* Shine animation */
+
+.report-btn:hover::before {
+  left: 150%;
+}
+
+
+/* Arrow moves */
+
+.report-btn:hover span {
+  transform: translateX(4px);
+}
+
+
+/* Click effect */
+
+.report-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(21, 128, 61, 0.2);
 }

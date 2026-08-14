@@ -25,19 +25,19 @@ function Navbar() {
         {/* NAVIGATION */}
         <nav className="navbar-links">
 
-          <a href="#home" className="nav-link active">
-            Home
-          </a>
+  <a href="#home" className="nav-link">
+    Home
+  </a>
 
-          <a href="#how-it-works" className="nav-link">
-            How It Works
-          </a>
+  <a href="#how-it-works" className="nav-link">
+    How It Works
+  </a>
 
-          <a href="#about" className="nav-link">
-            About
-          </a>
+  <a href="#about" className="nav-link">
+    About
+  </a>
 
-        </nav>
+</nav>
 
 
         {/* RIGHT SIDE */}
@@ -56,10 +56,8 @@ function Navbar() {
         </div>
 
 
-        {/* MOBILE */}
-        <button className="mobile-menu">
-          ☰
-        </button>
+        
+      
 
       </div>
 
