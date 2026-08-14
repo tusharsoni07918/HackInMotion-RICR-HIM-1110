@@ -206,12 +206,6 @@ function ReportIssue() {
             },
 
             priority,
-
-            /*
-              Photo is currently previewed on frontend.
-              Backend photo upload can be added later
-              using FormData.
-            */
           }),
         }
       );
@@ -222,19 +216,17 @@ function ReportIssue() {
          AUTHENTICATION ERROR
       =================================================== */
 
-      if (
-        response.status === 401 ||
-        response.status === 403
-      ) {
+      if (response.status === 401 || response.status === 403) {
         localStorage.removeItem("civicGuardianToken");
         localStorage.removeItem("civicGuardianUser");
 
         setIsLoggedIn(false);
 
-        alert(
+        const message =
           data.message ||
-            "Your login session has expired. Please login again."
-        );
+          "Your login session is invalid or expired.";
+
+        alert(`${message} Please login again.`);
 
         navigate("/login");
         return;
@@ -247,7 +239,7 @@ function ReportIssue() {
       if (!response.ok) {
         alert(
           data.message ||
-            "Failed to report issue."
+            "Unable to submit the issue. Please try again."
         );
 
         return;
@@ -275,6 +267,7 @@ function ReportIssue() {
       setLocation(null);
 
       removePhoto();
+
     } catch (error) {
       console.error(
         "Error reporting issue:",
@@ -282,8 +275,9 @@ function ReportIssue() {
       );
 
       alert(
-        "Unable to connect to server. Please make sure the backend is running."
+        "Unable to connect to the server. Please check that the backend is running."
       );
+
     } finally {
       setLoading(false);
     }
@@ -395,7 +389,6 @@ function ReportIssue() {
 
       </div>
 
-
       {/* FORM CARD */}
 
       <div className="report-card">
@@ -437,7 +430,6 @@ function ReportIssue() {
           </p>
 
         </div>
-
 
         {/* CATEGORY */}
 
@@ -491,7 +483,6 @@ function ReportIssue() {
 
         </div>
 
-
         {/* DESCRIPTION */}
 
         <div className="form-group">
@@ -516,7 +507,6 @@ function ReportIssue() {
           </p>
 
         </div>
-
 
         {/* MAP */}
 
@@ -560,9 +550,6 @@ function ReportIssue() {
 
           </div>
 
-
-          {/* LOCATION INFO */}
-
           {location ? (
             <p className="location-text">
               📍 Location selected:{" "}
@@ -579,7 +566,6 @@ function ReportIssue() {
 
         </div>
 
-
         {/* PHOTO EVIDENCE */}
 
         <div className="form-group">
@@ -592,6 +578,7 @@ function ReportIssue() {
 
             {!photo ? (
               <>
+
                 <span className="upload-icon">
                   📷
                 </span>
@@ -613,8 +600,10 @@ function ReportIssue() {
                   />
 
                 </label>
+
               </>
             ) : (
+
               <div className="photo-preview">
 
                 <img
@@ -632,12 +621,12 @@ function ReportIssue() {
                 </button>
 
               </div>
+
             )}
 
           </div>
 
         </div>
-
 
         {/* PRIORITY */}
 
@@ -671,7 +660,6 @@ function ReportIssue() {
 
         </div>
 
-
         {/* SUBMIT */}
 
         <button
@@ -680,13 +668,10 @@ function ReportIssue() {
           onClick={handleSubmit}
           disabled={loading}
         >
-
           {loading
             ? "Submitting..."
             : "Submit Issue"}
-
         </button>
-
 
         {/* SUCCESS MESSAGE */}
 
@@ -719,6 +704,7 @@ function ReportIssue() {
         )}
 
       </div>
+
     </div>
   );
 }
